@@ -3,7 +3,7 @@ const { Schema, model } = require('mongoose');
 const userSchema = new Schema(
     {
         id: {
-            type: Number, 
+            type: String, 
             unique: true, 
             required: true,
         }, 
@@ -15,9 +15,6 @@ const userSchema = new Schema(
             type: Schema.Types.ObjectId, 
             ref: 'Task', 
         }],
-    }, 
-    {
-        _id: false
     }
 )
 

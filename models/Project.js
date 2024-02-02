@@ -14,11 +14,11 @@ const projectSchema = new Schema(
             ref: 'Task'
         }], 
         owner: {
-            type: Number, 
+            type: String, 
             ref: 'User'
         }, 
         collaborators: [{
-            type: Number, 
+            type: String, 
             ref: 'User'
         }],   
     }, 

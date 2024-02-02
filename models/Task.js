@@ -11,7 +11,7 @@ const taskSchema = new Schema(
         priority: String, 
         status: String,
         assignees: [{
-            type: Number, 
+            type: String, 
             ref: 'User'
         }],
     }

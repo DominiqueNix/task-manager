@@ -1,21 +1,74 @@
-
-//get one project for a user
-//add a project
-//update a project
-//delete a project
-
-//use this when you add middleware
-// const router= require("express")
 const router = require('express').Router();
-const {User, Project, Task} = require('../models')
+const {User, Project, Task} = require('../models');
+const projectAuth = require('../middleware/auth')
 
-//move to home routes (maybe rename to /dashboard/:userId)
-//find all projects and tasks for a user (good for dashboard homepage widgets)
+//get all projects (testing purposes)
+router.get('/', async (req, res) => {
+    try{
+        res.send(await Project.find())
+    }catch(err){
+        console.log(err)
+    }
+})
+
+//get one project (only if you have access)
+router.get('/:projectId', projectAuth ,async (req, res) => {
+    try{
+        res.send(req.project)     
+    }catch(err){
+        console.log(err)
+    }
+})
+
+//create project
+router.post('/', async (req, res) => {
+    try{
+        let userId = req.oidc.user.sid
+        let project = await Project.create(req.body);
+        await Project.findByIdAndUpdate(
+            project._id, 
+            {
+                $set: {owner: userId}, 
+                $addToSet: {collaborators: userId}
+            }
+        )
+        await User.findOneAndUpdate(
+            {id: userId}, 
+            {$addToSet: {projects: project._id}}
+        )
+        res.send("project added")
+    }catch(err){
+        console.log(err)
+    }
+})
+
+//update a project (tasks are handle in the taskRoutes; can't delete or add tasks froms the project edit endpoint)
+router.put('/:projectId', projectAuth ,async(req, res) => {
+    try{
+
+        //will add any current collborators so that they aren't lost when 
+        //req.body is being set
+        if(req.body.collaborators){
+            req.project.collaborators.forEach(col => req.body.collaborators.push(col)); 
+        }
+
+        let project = await Project.findByIdAndUpdate(
+            {_id: req.project._id}, 
+            {$set: req.body}
+        )
+
+        res.send(project)
+    }catch(err){
+        console.log(err)
+    }
+})
 
 
-//add a project => adds project to database, updates owner as the current user, adds project to user, and add user to collaborator
+//delete a project 
+//TODO: Decide if you want all tasks for that project deleted when proect is deleted 
+    //I feel like yes. I don't think there should be any free floating tasks
+    //tasks can only exist when attached to a project
+router.delete()
 
-//find one project for a user 
-// router.get()
 
 module.exports = router;

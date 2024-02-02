@@ -1,15 +1,19 @@
-//need to create a /dashboard route that requres auth
-//within this route I will grab the genereated access token 
-// check if the user id matches one in my database, if not, add user
+
 const router = require('express').Router();
 const {User, Project, Task} = require('../models')
 // router.get('/users', async)
 
 //get all projects and tasks for a user
-router.get('/:userId', async (req, res) => {
+router.get('/', async (req, res) => {
     try{
-        let user = await User.findOne({id: req.params.userId}).populate("projects").populate("tasks")
-        res.send(user)
+        let id = req.oidc.user.sid;
+        let user = await User.findOne({id:id}).populate("projects").populate("tasks");
+        if(user) {
+            res.send(user)
+        } else {
+            await User.create({id: id})
+            res.send("Welcome new user")
+        }
     }catch(err){
         console.log(err)
     }
