@@ -1,0 +1,142 @@
+[
+    {
+      "title": "Finalize quarterly budget report",
+      "description": "Review financial data, calculate projections, and create a comprehensive budget report for Q2.",
+      "dueDate": "2024-02-15",
+      "priority": "critical",
+      "status": "not started"
+    },
+    {
+      "title": "Schedule team meeting for project kickoff",
+      "description": "Send meeting invites, prepare agenda, and gather necessary materials for the project kickoff meeting.",
+      "dueDate": "2024-02-07",
+      "priority": "high",
+      "status": "in-progress"
+    },
+    {
+      "title": "Respond to client emails",
+      "description": "Address urgent client inquiries, provide updates, and resolve any outstanding issues.",
+      "dueDate": "2024-02-02",
+      "priority": "medium",
+      "status": "complete"
+    },
+    {
+      "title": "Research new marketing strategies",
+      "description": "Explore new trends, analyze competitor campaigns, and identify potential opportunities for innovative marketing initiatives.",
+      "dueDate": "2024-03-01",
+      "priority": "medium",
+      "status": "not started"
+    },
+    {
+      "title": "Update website content",
+      "description": "Review and revise website copy, create new blog posts, and ensure all information is up-to-date and engaging.",
+      "dueDate": "2024-02-20",
+      "priority": "minor",
+      "status": "in-progress"
+    },
+    {
+      "title": "Organize files and documents",
+      "description": "Create a clear filing system, categorize digital and physical documents, and ensure easy accessibility for future reference.",
+      "dueDate": "2024-02-10",
+      "priority": "minor",
+      "status": "complete"
+    },
+    {
+      "title": "Prepare presentation for upcoming conference",
+      "description": "Develop engaging slides, rehearse delivery, and gather feedback to ensure a polished and impactful presentation.",
+      "dueDate": "2024-03-15",
+      "priority": "high",
+      "status": "not started"
+    },
+    {
+      "title": "Conduct user testing for new app feature",
+      "description": "Recruit participants, develop testing scenarios, collect feedback, and analyze results to identify areas for improvement.",
+      "dueDate": "2024-02-28",
+      "priority": "critical",
+      "status": "in-progress"
+    },
+    {
+      "title": "Brainstorm ideas for next product launch",
+      "description": "Collaborate with team members, explore market trends, and generate innovative concepts for potential product launches.",
+      "dueDate": "2024-03-08",
+      "priority": "medium",
+      "status": "not started"
+    },
+    {
+      "title": "Review and approve vendor proposals",
+      "description": "Evaluate bids, compare pricing, assess quality, and select the most suitable vendors for upcoming projects.",
+      "dueDate": "2024-02-18",
+      "priority": "high",
+      "status": "complete"
+    },
+    {
+      "title": "Schedule training sessions for new employees",
+      "description": "Coordinate training schedules, reserve rooms, prepare materials, and ensure a smooth onboarding process for new hires.",
+      "dueDate": "2024-02-25",
+      "priority": "medium",
+      "status": "in-progress"
+    },
+    {
+      "title": "Write press release for recent company achievements",
+      "description": "Draft a compelling press release highlighting key accomplishments and successes, targeting relevant media outlets.",
+      "dueDate": "2024-03-10",
+      "priority": "minor",
+      "status": "not started"
+    }, 
+    {
+        "title": "Order office supplies",
+        "description": "Replenish inventory of essential office supplies, ensuring availability for daily operations.",
+        "dueDate": "2024-02-12",
+        "priority": "minor",
+        "status": "not started"
+      },
+      {
+        "title": "Attend industry conference",
+        "description": "Network with peers, learn about market trends, and explore new technologies at the upcoming industry conference.",
+        "dueDate": "2024-03-20",
+        "priority": "high",
+        "status": "not started"
+      },
+      {
+        "title": "Evaluate performance of current marketing campaigns",
+        "description": "Analyze campaign metrics, track ROI, and identify areas for optimization to improve marketing effectiveness.",
+        "dueDate": "2024-02-23",
+        "priority": "medium",
+        "status": "in-progress"
+      },
+      {
+        "title": "Onboard new intern",
+        "description": "Welcome the new intern, provide necessary training, and assign initial tasks to get them started.",
+        "dueDate": "2024-02-19",
+        "priority": "medium",
+        "status": "complete"
+      },
+      {
+        "title": "Develop content calendar for social media",
+        "description": "Plan upcoming social media posts, schedule content releases, and ensure a consistent and engaging social media presence.",
+        "dueDate": "2024-02-09",
+        "priority": "minor",
+        "status": "not started"
+      },
+      {
+        "title": "Backup and archive important data",
+        "description": "Implement regular data backup procedures to ensure information security and prevent data loss.",
+        "dueDate": "2024-02-14",
+        "priority": "critical",
+        "status": "in-progress"
+      },
+      {
+        "title": "Renew software subscriptions",
+        "description": "Review software licenses, ensure timely renewals, and maintain access to necessary tools and applications.",
+        "dueDate": "2024-02-27",
+        "priority": "medium",
+        "status": "not started"
+      },
+      {
+        "title": "Investigate new productivity tools",
+        "description": "Research and evaluate potential software solutions to streamline workflows and enhance team productivity.",
+        "dueDate": "2024-03-06",
+        "priority": "minor",
+        "status": "not started"
+      }
+]
