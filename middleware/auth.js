@@ -4,16 +4,29 @@ const { Project } = require('../models');
 //is authorized by chekcing the collaborators on the project
 async function projectAuth(req, res, next) {
 
+    // finds the id of the current user (from auth0)
     let userId = req.oidc.user.sid;
-    let project = await Project.findById(req.params.projectId);
-    let authUsers = project.collaborators;
 
-    if(project && authUsers.includes(userId)) {
-        req.project = project;
-        next()
+    //finds the projects from the params
+    let project = await Project.findById(req.params.projectId);
+    if(project) {
+        
+        //keep track of users who are collaborators on this project 
+        let authUsers = project.collaborators;
+
+        //The current user only has access if they are a collaborator 
+        if(authUsers.includes(userId)){
+
+
+            req.project = project;  
+            next()
+        } else {
+            res.send("not authorized")
+        }
     }else{
-        res.send('not authorized')
+        res.send('no project found')
     }
 }
+
 
 module.exports = projectAuth;

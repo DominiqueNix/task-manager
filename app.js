@@ -5,6 +5,7 @@ const {auth} = require('express-openid-connect')
 const db = require("./connection/connection")
 const projectRoutes = require('./routes/projectRoute')
 const homeRoutes = require('./routes/homeRoute');
+const taskRoutes = require('./routes/taskRoute')
 
 const app = express()
 const PORT = process.env.PORT || 4000;
@@ -32,6 +33,7 @@ app.use(auth(config));
 
 app.use('/projects', projectRoutes);
 app.use('/dashboard', homeRoutes);
+app.use('/projects', taskRoutes)
 
 db.once('open', () => {
     app.listen(PORT, () => {

@@ -24,7 +24,10 @@ router.get('/:projectId', projectAuth ,async (req, res) => {
 router.post('/', async (req, res) => {
     try{
         let userId = req.oidc.user.sid
+        //creating the project
         let project = await Project.create(req.body);
+
+        //setting current user as the owner and add them as a collaborator
         await Project.findByIdAndUpdate(
             project._id, 
             {
@@ -32,6 +35,8 @@ router.post('/', async (req, res) => {
                 $addToSet: {collaborators: userId}
             }
         )
+
+        //adding project to user model
         await User.findOneAndUpdate(
             {id: userId}, 
             {$addToSet: {projects: project._id}}
@@ -64,11 +69,21 @@ router.put('/:projectId', projectAuth ,async(req, res) => {
 })
 
 
-//delete a project 
-//TODO: Decide if you want all tasks for that project deleted when proect is deleted 
-    //I feel like yes. I don't think there should be any free floating tasks
-    //tasks can only exist when attached to a project
-router.delete()
+//delete a project and all associated tasks
+router.delete('/:projectId', projectAuth ,async (req, res) => {
+    try{
+        if(req.project.tasks) {
+           for(let i = 0; i < req.project.tasks.length; i++) {
+                await Task.findByIdAndDelete(req.project.tasks[i]._id)
+            } 
+        }
+
+        await Project.findByIdAndDelete(req.project._id);
+        res.send("project deleted")
+    }catch(err){
+        console.log(err)
+    }
+})
 
 
 module.exports = router;
