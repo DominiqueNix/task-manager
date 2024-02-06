@@ -17,21 +17,6 @@ router.get('/:projectId/tasks/:taskId', projectAuth ,async (req, res) => {
 router.post('/:projectId/tasks', projectAuth ,async (req, res) => {
     try{
 
-        //make sure only people who are a part of the project can be assigned to the task
-        const userCanBeAdded = [];
-        if(req.body.assignees) {
-            req.body.assignees.forEach(user => {
-                if(!req.project.collaborators.includes(user)) {
-                    userCanBeAdded.push(false);
-                } else {
-                    userCanBeAdded.push(true)
-                }
-            })
-        }
-
-        if(userCanBeAdded.includes(false)){
-            res.send("cannot add users who are not collaborators on the project")
-        } else {
          //creating task
         let task = await Task.create(req.body);
 
@@ -43,8 +28,6 @@ router.post('/:projectId/tasks', projectAuth ,async (req, res) => {
             }
         )
         res.send("task added")   
-        }
-        
 
     }catch(err){
         console.log(err)
@@ -53,7 +36,36 @@ router.post('/:projectId/tasks', projectAuth ,async (req, res) => {
 
 
 //update a task
+router.put('/:projectId/tasks/:taskId', projectAuth, async (req, res) => {
+
+    try{
+      //find task, then add the current assignees to the req.body so they aren't lost upon update
+    let task = await Task.findById(req.params.taskId);
+
+    if(req.body.assignees){
+        task.assignees.forEach(user => req.body.assignees.push(user))
+    }
+
+    await Task.findByIdAndUpdate(
+        req.params.taskId, 
+        {$set: req.body}
+    )  
+    res.send("task updated")
+    }catch(err){
+        console.log(err)
+    }
+    
+})
+
 
 //delete a task
+router.delete('/:projectId/tasks/:taskId', projectAuth, async (req, res) => {
+    try{
+      await Task.findByIdAndDelete(req.params.taskId); 
+      res.send('task deleted') 
+    }catch(err){
+        console.log(err)
+    }
+})
 
 module.exports = router;
