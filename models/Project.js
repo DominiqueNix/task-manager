@@ -7,7 +7,6 @@ const projectSchema = new Schema(
             required:true
         }, 
         description: String,
-        endDate: Date, 
         onlyOwnerEdit: Boolean,
         tasks: [{
             type: Schema.Types.ObjectId, 

@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const {User, Project, Task} = require('../models');
-const projectAuth = require('../middleware/auth')
+const { projectAuth, projectAdmin } = require('../middleware/auth')
 
 //get all projects (testing purposes)
 router.get('/', async (req, res) => {
@@ -20,12 +20,15 @@ router.get('/:projectId', projectAuth ,async (req, res) => {
     }
 })
 
-//create project
+//create project (can't add tasks from this point)
 router.post('/', async (req, res) => {
     try{
         let userId = req.oidc.user.sid
+
         //creating the project
-        let project = await Project.create(req.body);
+        const {title, description, onlyOwnerEdit, collaborators} = req.body;
+
+        let project = await Project.create({title, description, onlyOwnerEdit, collaborators});
 
         //setting current user as the owner and add them as a collaborator
         await Project.findByIdAndUpdate(
@@ -47,19 +50,27 @@ router.post('/', async (req, res) => {
     }
 })
 
-//update a project (tasks are handle in the taskRoutes; can't delete or add tasks froms the project edit endpoint)
-router.put('/:projectId', projectAuth ,async(req, res) => {
+//update a project (tasks are handle in the taskRoutes; can't delete or add tasks from the project edit endpoint)
+router.put('/:projectId', [projectAuth, projectAdmin] ,async(req, res) => {
     try{
 
-        //will add any current collborators so that they aren't lost when 
+        //will add any current collborators so that they aren't lost when !!!Prevents deleting collaborators => should maybe be handled on front-end
+                // => so in FE form automatically populates all collaborators (minus owner b/c they can't be removed/and it's automatically hanlded in back)
         //req.body is being set
-        if(req.body.collaborators){
-            req.project.collaborators.forEach(col => req.body.collaborators.push(col)); 
-        }
+        // if(req.body.collaborators){
+        //     req.project.collaborators.forEach(col => req.body.collaborators.push(col)); 
+        // }
+
+        const {title, description, collaborators} = req.body;
 
         let project = await Project.findByIdAndUpdate(
             {_id: req.project._id}, 
-            {$set: req.body}
+            {$set: {
+                title: title, 
+                description: description, 
+                collaborators: [...collaborators, req.project.owner]
+                }
+            }
         )
 
         res.send(project)
@@ -70,14 +81,16 @@ router.put('/:projectId', projectAuth ,async(req, res) => {
 
 
 //delete a project and all associated tasks
-router.delete('/:projectId', projectAuth ,async (req, res) => {
+router.delete('/:projectId', [projectAuth, projectAdmin] ,async (req, res) => {
     try{
+        //delete all tasks for a project
         if(req.project.tasks) {
            for(let i = 0; i < req.project.tasks.length; i++) {
                 await Task.findByIdAndDelete(req.project.tasks[i]._id)
             } 
         }
 
+        //delete project
         await Project.findByIdAndDelete(req.project._id);
         res.send("project deleted")
     }catch(err){

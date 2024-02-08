@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const projectAuth = require('../middleware/auth');
+const {projectAuth} = require('../middleware/auth');
 const {Project, Task} = require('../models');
 
 //get one task
@@ -40,11 +40,11 @@ router.put('/:projectId/tasks/:taskId', projectAuth, async (req, res) => {
 
     try{
       //find task, then add the current assignees to the req.body so they aren't lost upon update
-    let task = await Task.findById(req.params.taskId);
+    // let task = await Task.findById(req.params.taskId);
 
-    if(req.body.assignees){
-        task.assignees.forEach(user => req.body.assignees.push(user))
-    }
+    // if(req.body.assignees){
+    //     task.assignees.forEach(user => req.body.assignees.push(user))
+    // }
 
     await Task.findByIdAndUpdate(
         req.params.taskId, 
