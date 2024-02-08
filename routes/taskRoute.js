@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 const {projectAuth} = require('../middleware/auth');
-const {Project, Task} = require('../models');
+const {Project, Task, User} = require('../models');
 
 //get one task
 router.get('/:projectId/tasks/:taskId', projectAuth ,async (req, res) => {
@@ -20,13 +20,24 @@ router.post('/:projectId/tasks', projectAuth ,async (req, res) => {
          //creating task
         let task = await Task.create(req.body);
 
-        // adding task to project
+        //iterate through assignees and add this task each users task list
+        if(req.body.assignees){         
+            for(let i = 0; i < req.body.assignees.length; i++) {
+                await User.findOneAndUpdate(
+                    {id: req.body.assignees[i]}, 
+                    {$addToSet: {tasks: task}}
+                )
+            }
+        }
+
+        // add task to project
         await Project.findByIdAndUpdate(
             req.project._id, 
             {
                 $addToSet: {tasks: task._id}
             }
         )
+
         res.send("task added")   
 
     }catch(err){
@@ -45,6 +56,31 @@ router.put('/:projectId/tasks/:taskId', projectAuth, async (req, res) => {
     // if(req.body.assignees){
     //     task.assignees.forEach(user => req.body.assignees.push(user))
     // }
+    // let task = await Task.findById(req.params.taskId)
+
+    // let newAssignees = req.body.assignees.filter(userId => !task.assignees.includes(userId))
+    
+    // newAssignees.forEach(user => {req.body.assignees.push(user)})
+
+    //check if a req.body.assignees exists 
+        //if so then for each assigne => find user e, add the task id to thier task list if the task id doenst already exists 
+    if(req.body.assignees){
+        for(let i = 0; i < req.body.assignees.length; i++){
+            let userId = req.body.assignees[i]
+            let user = await User.findOne({id: userId})
+            let userTasks = user.tasks;
+
+            if(!userTasks.includes(req.params.taskId)) {
+                userTasks.push(req.params.taskId)
+            }
+
+            await User.findOneAndUpdate(
+                {id: userId}, 
+                {$set: {tasks: userTasks}}
+            )
+        }
+    }
+    
 
     await Task.findByIdAndUpdate(
         req.params.taskId, 

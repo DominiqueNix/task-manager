@@ -61,6 +61,7 @@ router.put('/:projectId', [projectAuth, projectAdmin] ,async(req, res) => {
         //     req.project.collaborators.forEach(col => req.body.collaborators.push(col)); 
         // }
 
+        //updating a project 
         const {title, description, collaborators} = req.body;
 
         let project = await Project.findByIdAndUpdate(
@@ -73,7 +74,33 @@ router.put('/:projectId', [projectAuth, projectAdmin] ,async(req, res) => {
             }
         )
 
-        res.send(project)
+        //Checks if a user is deleted as a collborator, if so, they are also deleted from any task they might have been assigned
+        if(req.body.collaborators) {
+            let updatedProject = await Project.findById(req.project._id);
+            let authUsers = updatedProject.collaborators;
+
+            for(let i = 0; i < updatedProject.tasks.length; i++) {
+                let task = updatedProject.tasks[i];
+                let eachtask = await Task.findById(task._id)
+                let assignees = eachtask.assignees;
+                let newAssignees = [];
+                for(let j=0; j< assignees.length; j++){
+
+                    if(authUsers.includes(assignees[j])){
+                        
+                        newAssignees.push(assignees[j])
+                    } else {
+                        continue
+                    }
+                }
+                await Task.findByIdAndUpdate(
+                    task._id, 
+                    {$set: {assignees: newAssignees}}
+                    )
+            }
+        }
+
+        res.send("project updated")
     }catch(err){
         console.log(err)
     }
