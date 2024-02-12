@@ -17,9 +17,13 @@ router.get('/users', async(req, res) => {
 router.get('/', async (req, res) => {
     try{
         let id = req.oidc.user.sid;
-        let user = await User.findOne({id:id}).populate("projects").populate("tasks");
+        let user = await User.findOne({id:id}).populate("projects").populate("tasks").lean();
+
         if(user) {
-            res.send(user)
+            res.render('dashboard', {
+              user: user,
+              username: req.oidc.user.username ?req.oidc.user.username : req.oidc.user.email
+            })
         } else {
             await User.create({id: id})
             res.send("Welcome new user")

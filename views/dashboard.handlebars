@@ -1,0 +1,18 @@
+<h1>Welcome, {{username}}</h1>
+{{!-- <p>{{user.projects}}</p> --}}
+{{!-- <p>{{user.tasks[0].title}}</p> --}}
+{{#if user.projects}}
+<h3>Projects</h3>
+    {{#each user.projects as |project|}}
+        <p>{{project.title}}</p>
+    {{/each}}
+{{/if}}
+
+{{#if user.tasks}}
+<h3>Tasks</h3>
+    {{#each user.tasks as |task|}}
+        <p>{{task.title}}</p>
+    {{/each}}
+{{/if}}
+
+

@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-const cors = require('cors');
+const hbs = require('express-handlebars');
 const {auth} = require('express-openid-connect')
 const db = require("./connection/connection")
 const projectRoutes = require('./routes/projectRoute')
@@ -25,15 +25,26 @@ const config = {
     issuerBaseURL: AUTH0_BASE_URL
 };
 
-app.use(cors())
+app.engine('handlebars', hbs.engine());
+app.set('view engine', 'handlebars');
+
 app.use(express.json())
 app.use(express.urlencoded({extended:true}));
 
+
+app.get('/', (req, res) => {
+    res.render('home')
+})
+
 app.use(auth(config));
+
+
 
 app.use('/projects', projectRoutes);
 app.use('/dashboard', homeRoutes);
 app.use('/projects', taskRoutes)
+
+
 
 db.once('open', () => {
     app.listen(PORT, () => {
