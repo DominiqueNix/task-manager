@@ -38,7 +38,6 @@ const taskData = {
 beforeEach(async () => {
     await connect(process.env.MONGODB_URI);
     
-    // await User.findOneAndDelete({email: testEmail1})
     await User.findOneAndDelete({email: testEmail2})
     user2 = await User.create({email: testEmail2})
 
