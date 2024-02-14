@@ -2,11 +2,12 @@ require('dotenv').config();
 const express = require('express');
 const hbs = require('express-handlebars');
 const {auth} = require('express-openid-connect')
-const db = require("./connection/connection")
+
 const projectRoutes = require('./routes/projectRoute')
 const homeRoutes = require('./routes/homeRoute');
 const taskRoutes = require('./routes/taskRoute')
-
+const helpers = require('./utils/helpers')
+const path = require('path')
 const app = express()
 const PORT = process.env.PORT || 4000;
 
@@ -25,11 +26,14 @@ const config = {
     issuerBaseURL: AUTH0_BASE_URL
 };
 
-app.engine('handlebars', hbs.engine());
+const hbshelpers = hbs.create({ helpers });
+
+app.engine('handlebars', hbshelpers.engine);
 app.set('view engine', 'handlebars');
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}));
+app.use(express.static(path.join(__dirname, 'public')))
 
 
 app.get('/', (req, res) => {
@@ -44,10 +48,5 @@ app.use('/projects', projectRoutes);
 app.use('/dashboard', homeRoutes);
 app.use('/projects', taskRoutes)
 
+module.exports = app
 
-
-db.once('open', () => {
-    app.listen(PORT, () => {
-        console.log(`Server running at http://localhost:${PORT}`)
-    }) 
-})

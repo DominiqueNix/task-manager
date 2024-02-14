@@ -14,7 +14,11 @@ router.get('/', async (req, res) => {
 //get one project (only if you have access)
 router.get('/:projectId', projectAuth ,async (req, res) => {
     try{
-        res.send(req.project)     
+        // res.send(req.project)
+        res.render(
+            "oneProject", 
+            {project: req.project}
+        )     
     }catch(err){
         console.log(err)
     }
@@ -23,9 +27,9 @@ router.get('/:projectId', projectAuth ,async (req, res) => {
 //create project (can't add tasks from this point)
 router.post('/', async (req, res) => {
     try{
-        let userId = req.oidc.user.sid
+        let user = await User.findOne({email: req.oidc.user.email});
 
-        //creating the project
+        //creating the project using allwo listing
         const {title, description, onlyOwnerEdit, collaborators} = req.body;
 
         let project = await Project.create({title, description, onlyOwnerEdit, collaborators});
@@ -34,17 +38,17 @@ router.post('/', async (req, res) => {
         await Project.findByIdAndUpdate(
             project._id, 
             {
-                $set: {owner: userId}, 
-                $addToSet: {collaborators: userId}
+                $set: {owner: user._id}, 
+                $addToSet: {collaborators: user._id}
             }
         )
 
         //adding project to user model
-        await User.findOneAndUpdate(
-            {id: userId}, 
+        await User.findByIdAndUpdate(
+             user._id, 
             {$addToSet: {projects: project._id}}
         )
-        res.send("project added")
+        res.status(201).send("project added")
     }catch(err){
         console.log(err)
     }
@@ -64,15 +68,19 @@ router.put('/:projectId', [projectAuth, projectAdmin] ,async(req, res) => {
         //updating a project 
         const {title, description, collaborators} = req.body;
 
-        let project = await Project.findByIdAndUpdate(
+       await Project.findByIdAndUpdate(
             {_id: req.project._id}, 
             {$set: {
                 title: title, 
                 description: description, 
-                collaborators: [...collaborators, req.project.owner]
+                collaborators: [req.project.owner]
                 }
             }
         )
+
+        if(collaborators) {
+            await Project.findByIdAndUpdate(req.project._id,{$addToSet: {collaborators: [...collaborators]}})
+        }
 
         //Checks if a user is deleted as a collborator, if so, they are also deleted from any task they might have been assigned
         if(req.body.collaborators) {
@@ -100,7 +108,7 @@ router.put('/:projectId', [projectAuth, projectAdmin] ,async(req, res) => {
             }
         }
 
-        res.send("project updated")
+        res.status(200).send("project updated")
     }catch(err){
         console.log(err)
     }

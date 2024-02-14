@@ -13,11 +13,11 @@ const projectSchema = new Schema(
             ref: 'Task'
         }], 
         owner: {
-            type: String, 
+            type: Schema.Types.ObjectId, 
             ref: 'User'
         }, 
         collaborators: [{
-            type: String, 
+            type: Schema.Types.ObjectId, 
             ref: 'User'
         }],   
     }, 

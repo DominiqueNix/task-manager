@@ -89,6 +89,9 @@ db.once('open', async () => {
     //         }
     //     }
 
+    //Add projects 
+    //add two tasks to each project
+
         console.log("database seeded");
         process.exit(0);
 

@@ -97,7 +97,15 @@ router.put('/:projectId/tasks/:taskId', projectAuth, async (req, res) => {
 //delete a task
 router.delete('/:projectId/tasks/:taskId', projectAuth, async (req, res) => {
     try{
+    
+    //delete task
       await Task.findByIdAndDelete(req.params.taskId); 
+
+    //delete task from project
+    await Project.findByIdAndUpdate(
+        req.params.projectId, 
+        {$pull: {tasks: req.params.taskId}}
+    )
       res.send('task deleted') 
     }catch(err){
         console.log(err)

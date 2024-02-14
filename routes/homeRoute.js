@@ -16,18 +16,16 @@ router.get('/users', async(req, res) => {
 //get all projects and tasks for a user
 router.get('/', async (req, res) => {
     try{
-        let id = req.oidc.user.sid;
-        let user = await User.findOne({id:id}).populate("projects").populate("tasks").lean();
-
-        if(user) {
-            res.render('dashboard', {
-              user: user,
-              username: req.oidc.user.username ?req.oidc.user.username : req.oidc.user.email
-            })
-        } else {
-            await User.create({id: id})
-            res.send("Welcome new user")
-        }
+        let email = req.oidc.user.email;
+        let user = await User.findOne({email: email}).populate("projects").populate("tasks").lean();
+        if(!user) {
+            user = await User.create({email: email})
+        } 
+        // res.send(user)
+        res.render('dashboard', {
+            user: user,
+            username: req.oidc.user.username ?req.oidc.user.username : req.oidc.user.email
+          })
     }catch(err){
         console.log(err)
     }

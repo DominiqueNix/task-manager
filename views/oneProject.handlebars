@@ -1,0 +1,14 @@
+<div class="jumbotron m-5">
+  <h1 class="display-4">{{project.title}}</h1>
+  <h4 class="lead">{{project.description}}</h6>  
+</div>
+<div class="m-5 text-center d-flex display-content-center flex-column w-50">
+<h4 >All Tasks</h6>
+{{#each project.tasks as |task|}}
+    <button class="btn btn-light m-2">
+        <p>{{task.title}}</p>
+        <p>status: <span class="badge bg-primary">{{task.status}}</span></p>
+        <p>priority: <span class="badge bg-primary">{{task.priority}}</span></p>
+    </button>
+{{/each}}
+</div>
