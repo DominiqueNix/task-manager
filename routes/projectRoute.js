@@ -69,19 +69,15 @@ router.put('/:projectId', [projectAuth, projectAdmin] ,async(req, res) => {
         const {title, description, collaborators} = req.body;
 
        await Project.findByIdAndUpdate(
-            {_id: req.project._id}, 
+            {_id: req.project._id},
             {$set: {
                 title: title, 
                 description: description, 
-                collaborators: [req.project.owner]
-                }
+                collaborators: [...req.body.collaborators, req.project.owner]
+            }
             }
         )
-
-        if(collaborators) {
-            await Project.findByIdAndUpdate(req.project._id,{$addToSet: {collaborators: [...collaborators]}})
-        }
-
+          
         //Checks if a user is deleted as a collborator, if so, they are also deleted from any task they might have been assigned
         if(req.body.collaborators) {
             let updatedProject = await Project.findById(req.project._id);

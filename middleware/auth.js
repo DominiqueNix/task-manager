@@ -49,7 +49,7 @@ const middleware = {
 
         // checks the permissions of the project and checks if the current user is the project owner
         if(project.onlyOwnerEdit === true && !currUser._id.equals(project.owner)){
-            res.status(404).send("Not authorized to edit project")
+            res.status(401).send("Not authorized to edit project")
         } else {
             next()
         }

@@ -96,11 +96,21 @@ describe("project routes", () => {
         const res = await request(app).delete(`/projects/${project2._id}`).set("Authorization", `Bearer ${testEmail3}`).expect(401); 
     })
 
-//     // test("PUT /projects/projectId will delete a user from thier tasks if a user is removed as a collaborator on a project", async() => {
+    test("PUT /projects/projectId will delete a user from thier tasks if a user is removed as a collaborator on a project", async() => {
+        let task = await Task.create({...taskData, assignees:[user3._id]});
+        let newProject = await Project.create({...project, collaborators: [user2._id, user3._id], tasks: [task._id]})
+        const res = await request(app).put(`/projects/${newProject._id}`).set("Authorization", `Bearer ${testEmail2}`).send({title: "new title", collaborators: []}).expect(200);
+        let updatedProject = await Project.findById(newProject._id);
+        let updatedTask = await Task.findById(task._id);
+        expect(updatedProject.collaborators.length).toBe(1);
+        expect(updatedTask.assignees.length).toBe(0)
+    })
 
-//     // })
-
-//     //test("PUT /projects/projectId will NOT update if onlyOwnerEdit is true and a user who is not the owner (but still a collaborator) tries to update project")
+    test("PUT /projects/projectId will NOT update if onlyOwnerEdit is true and a user who is not the owner (but still a collaborator) tries to update project", async() => {
+        let newProject = await Project.create({...project, collaborators: [user2._id, user3._id], onlyOwnerEdit: true})
+        const res = await request(app).put(`/projects/${newProject._id}`).set("Authorization", `Bearer ${testEmail3}`).send({title: "new title"}).expect(401);
+    
+    })
 })
 
 describe("task routes", ()=> {
