@@ -19,7 +19,6 @@ router.post('/:projectId/tasks', projectAuth ,async (req, res) => {
 
          //creating task
         let task = await Task.create(req.body);
-
         //iterate through assignees and add this task each users task list
         if(req.body.assignees){         
             for(let i = 0; i < req.body.assignees.length; i++) {
@@ -38,7 +37,7 @@ router.post('/:projectId/tasks', projectAuth ,async (req, res) => {
             }
         )
 
-        res.send("task added")   
+        res.status(201).send("task added")   
 
     }catch(err){
         console.log(err)
@@ -50,6 +49,7 @@ router.post('/:projectId/tasks', projectAuth ,async (req, res) => {
 router.put('/:projectId/tasks/:taskId', projectAuth, async (req, res) => {
 
     try{
+        
       //find task, then add the current assignees to the req.body so they aren't lost upon update
     // let task = await Task.findById(req.params.taskId);
 
@@ -67,26 +67,27 @@ router.put('/:projectId/tasks/:taskId', projectAuth, async (req, res) => {
     if(req.body.assignees){
         for(let i = 0; i < req.body.assignees.length; i++){
             let userId = req.body.assignees[i]
-            let user = await User.findOne({id: userId})
-            let userTasks = user.tasks;
+            // let user = await User.findOne({_id: userId})
+            // let userTasks = user.tasks;
 
-            if(!userTasks.includes(req.params.taskId)) {
-                userTasks.push(req.params.taskId)
-            }
+            // if(!userTasks.includes(req.params.taskId)) {
+            //     userTasks.push(req.params.taskId)
+            // }
+            // console.log(user.tasks)
 
-            await User.findOneAndUpdate(
-                {id: userId}, 
-                {$set: {tasks: userTasks}}
+            await User.findByIdAndUpdate(
+                userId, 
+                {$addToSet: {tasks: req.params.taskId}}
             )
         }
+        
     }
-    
 
     await Task.findByIdAndUpdate(
         req.params.taskId, 
         {$set: req.body}
     )  
-    res.send("task updated")
+    res.status(200).send("task updated")
     }catch(err){
         console.log(err)
     }
@@ -97,7 +98,6 @@ router.put('/:projectId/tasks/:taskId', projectAuth, async (req, res) => {
 //delete a task
 router.delete('/:projectId/tasks/:taskId', projectAuth, async (req, res) => {
     try{
-    
     //delete task
       await Task.findByIdAndDelete(req.params.taskId); 
 

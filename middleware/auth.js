@@ -17,22 +17,21 @@ const middleware = {
                 req.project = project; 
 
                 //ensures that a user cannont be added as an assignee to a task unless they are a collborator on the project
-                const userCanBeAdded = [];
-                if(req.body.assignees) {
-                    req.body.assignees.forEach(user => {
-                        if(!req.project.collaborators.includes(user)) {
-                            userCanBeAdded.push(false);
-                        } else {
-                            userCanBeAdded.push(true)
+               if(req.body.assignees){ 
+                    const userCanBeAdded = [];
+                    for(let j = 0; j <req.project.collaborators.length; j++) {
+                        for(let i = 0; i < req.body.assignees.length; i++){
+                            let user = await User.findById(req.body.assignees[i])
+                            if(req.project.collaborators[j].equals(user._id)){
+                                userCanBeAdded.push(true)
+                            }
                         }
-                    })
+                    }
+                    if(userCanBeAdded.length !== req.body.assignees.length){
+                        res.status(401).send("cannot add users who are not collaborators on the project")
+                    }
                 }
-        
-                if(userCanBeAdded.includes(false)){
-                    res.status(401).send("cannot add users who are not collaborators on the project")
-                } else {
-                next()  
-                }  
+                next()
             } else {
                 res.status(401).render("notAuth")
             }
