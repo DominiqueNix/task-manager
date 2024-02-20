@@ -72,13 +72,14 @@ newTaskSubmit.addEventListener('click', async() =>{
     let description = document.getElementById('task-description').value.trim()
     let priority = document.getElementById('task-priority').value.trim()
     let status = document.getElementById('task-status').value.trim()
+    let dueDate = document.getElementById('due-date').value
     let assignees = []
     document.querySelectorAll(".task-checkbox:checked").forEach(node => assignees.push(node.value))
     
     if(title) {
         const res = await fetch(`/projects/${projectId}/tasks`, {
             method:'POST', 
-            body: JSON.stringify({title, description, priority, status, assignees}), 
+            body: JSON.stringify({title, description, priority, status,dueDate ,assignees}), 
             headers: {'Content-Type': 'application/json'}
         })
 
@@ -89,5 +90,87 @@ newTaskSubmit.addEventListener('click', async() =>{
         }
     }
 })
+
+//autocomplete for collaborators 
+let users = [];
+let usersEmail = []
+
+document.getElementById('projectModalBtn').addEventListener('click', async () => {
+    const res = await fetch('/dashboard/users')
+    if(res.ok) {
+        users = await res.json()
+        users.forEach(u => usersEmail.push(u.email))
+    } else {
+        alert(res.statusText)
+    }
+})
+
+const autocompleteMatch = (input) => {
+    if(input == '') {
+        return []
+    }
+
+    let reg = new RegExp(input)
+    return usersEmail.filter((term) => {
+        if(term.match(reg)) {
+            return term;
+        }
+    })
+}
+
+const showResults = (val) => {
+    res = document.getElementById("result")
+    res.innerHTML = '';
+    let ul = document.createElement('ul')
+    let terms = autocompleteMatch(val)
+    for(i=0; i < terms.length; i++) {
+        let item = document.createElement('li')
+        item.textContent = terms[i]
+        item.setAttribute('onClick', "addCollaborator(this)")
+        ul.appendChild(item)
+    }
+    res.appendChild(ul)
+
+
+}
+let projectCollaborators = [];
+let chosenCollaborators = document.getElementById("chosen-collaborators")
+
+const addCollaborator = (val) => {
+    let newCollab;
+    users.forEach(u => {
+        if(u.email === val.textContent){
+            newCollab = u._id
+        }
+    })
+    projectCollaborators.push(newCollab)
+    let span = document.createElement('span');
+    span.classList.add('d-inline-flex')
+    span.classList.add("badge", "badge-pill", "bg-secondary", "m-2", "p-2", "collab")
+    span.textContent = val.textContent
+    let closeBtn = document.createElement('div')
+    closeBtn.classList.add('remove-collab')
+    closeBtn.innerHTML = "<i class='bx bx-x-circle'></i>"
+    closeBtn.setAttribute("onClick", "removeProjectCollaborator(this.parentElement)")
+    span.appendChild(closeBtn)
+    chosenCollaborators.appendChild(span)
+    console.log(projectCollaborators)
+    
+}
+
+const removeProjectCollaborator = (val) => {
+    let removedCollab;
+    users.forEach(u => {
+        if(u.email === val.textContent){
+            removedCollab= u._id
+        }
+    })
+    const removed = projectCollaborators.indexOf(removedCollab)
+    projectCollaborators.splice(removed, 1)
+    chosenCollaborators.removeChild(val)
+    console.log(projectCollaborators)
+}
+
+
 
 //grab btn for pojects and redirect to a single project view 

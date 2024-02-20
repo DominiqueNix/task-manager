@@ -6,7 +6,7 @@ const middleware = {
     let currUser = await User.findOne({email: req.oidc.user.email});
     //finds the projects from the params
     let project = await Project.findById(req.params.projectId).populate('tasks').lean();
-
+    req.user = currUser;
     if(project) {
             //keep track of users who are collaborators on this project 
             let authUsers = [];

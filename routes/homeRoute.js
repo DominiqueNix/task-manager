@@ -6,7 +6,7 @@ const {User, Project, Task} = require('../models')
 // find all users (testing only)
 router.get('/users', async(req, res) => {
     try{
-       res.send(await User.find());
+       res.send(await User.find().select("_id email"));
 
     }catch(err){
         console.log(err)

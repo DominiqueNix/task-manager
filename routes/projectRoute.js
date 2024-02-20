@@ -17,7 +17,7 @@ router.get('/:projectId', projectAuth ,async (req, res) => {
         // res.send(req.project)
         res.render(
             "oneProject", 
-            {project: req.project}
+            {project: req.project, user: req.user}
         )     
     }catch(err){
         console.log(err)

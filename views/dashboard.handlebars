@@ -3,7 +3,6 @@
 {{!-- <p>{{user.tasks[0].title}}</p> --}}
 <div class="d-flex flex-column justify-content-center align-items-center mt-4">
 <h4 class="display-8 w-75 text-secondary text-left" id="sub-title"></h4>
- <h4 class="heading-3 w-75 text-left">Welcome, {{username}}</h4>   
 <div class="card w-75" id="task-card" data-value="{{json user.tasks}}">
     <div class="card-body d-flex flex-row justify-content-between align-items-center display-6">
         <section class="m-4 text-center">
@@ -30,7 +29,7 @@
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#taskModal">
         Create Task
     </button>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#projectModal">
+    <button id="projectModalBtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#projectModal">
         Create Project
     </button>
 </div>
@@ -38,7 +37,7 @@
 <!--Add Task Modal-->
 <div class="modal fade" id="taskModal" tabindex="-1" role="dialog" aria-labelledby="taskModalTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
+    <div class="modal-content ">
       <div class="modal-header">
         <h5 class="modal-title" id="taskModalTitle">Create new task</h5>
         <button type="button" class="close btn" data-dismiss="modal" aria-label="Close">
@@ -63,6 +62,18 @@
             <label for="task-description">Description</label>
             <input type="text" class="form-control" id="task-description" placeholder="Enter task description">
           </div>
+          <div class="container w-100 p-0 mb-4"> 
+            <label>Due Date </label> 
+            <div id="datepicker" 
+              class="input-group date w-100" 
+              data-date-format="mm-dd-yyyy"> 
+              <input id="due-date" class="form-control" 
+                    type="text" readonly /> 
+              <span class="input-group-addon"> 
+                  {{!-- <i class='bx bx-calendar' ></i> --}}
+              </span> 
+            </div> 
+          </div> 
           <div class="form-group mb-4">
             <label for="task-priority">Priority</label>
               <select id="task-priority" class="form-control">
@@ -83,14 +94,9 @@
            <div class="mb-4" id="task-assignees" data-value="{{json user.projects}}">
               <p>Assignees</p>
            </div>
-          {{!-- <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-            <label class="form-check-label" for="exampleCheck1">Check me out</label>
-          </div> --}}
           <buttonn id="new-task-submit" type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>
-      {{!-- </div> --}}
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
@@ -109,11 +115,13 @@
         </button>
       </div>
       <div class="modal-body">
-        {{!-- form title text description text priority select status select assignees div (handle rest in js) --}}
-        ...
+        {{!-- form title text description textonylowneredit select status input collaboators div (handle rest in js) --}}
+        <form autocomplete="off">
+          <div id="chosen-collaborators"></div>
+          <input type="text" name="q" id="q" onKeyUp="showResults(this.value)" />
+            <div id="result"></div>
+          </form>
         </div>
-      
-
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>

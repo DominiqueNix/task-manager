@@ -1,0 +1,61 @@
+.nav-link {
+    color:white !important;
+    font-size: 1.5rem !important;
+}
+
+.nav-link:hover {
+    color: #9e0000 !important;
+}
+
+.nav-title {
+    font-size: 2rem !important;
+}
+
+.datepicker {
+    width: 200px;
+    padding-left: 20px !important;
+}
+
+.day:hover {
+    cursor: pointer !important;
+    background-color: lightgray;
+}
+.day {
+    /* background-color: lightgray !important; */
+    border: lightgray 1px solid;
+    padding: 2px !important;
+    text-align: center;
+}
+
+.modal {
+    --bs-modal-width: 600px !important;
+}
+
+#result {
+    border: 1px dotted #ccc;
+    padding: 3px;
+  }
+  #result ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  #result ul li {
+    padding: 5px 0;
+  }
+  #result ul li:hover {
+    background: #eee;
+  }
+
+.remove-collab{
+    margin-left: .5rem;
+    font-size: 1.2rem;
+}
+.remove-collab:hover{
+    color: rgb(0, 0, 0) ;
+}
+
+.collab{
+    font-size: 1rem !important;
+    font-weight: 300 !important;
+}
