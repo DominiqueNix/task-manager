@@ -2,10 +2,18 @@ const router = require('express').Router();
 const {User, Project, Task} = require('../models');
 const { projectAuth, projectAdmin } = require('../middleware/auth')
 
-//get all projects (testing purposes)
-router.get('/', async (req, res) => {
+//get all projects for a user
+router.get('/',async (req, res) => {
     try{
-        res.send(await Project.find())
+        let user = await User.findOne({email: req.oidc.user.email}).populate({
+            path: "projects", 
+            populate: {
+                path: "collaborators", 
+                model: "User"
+            }
+
+        }).populate("tasks").lean();
+        res.render("projects", {user: user})
     }catch(err){
         console.log(err)
     }
