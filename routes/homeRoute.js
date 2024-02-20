@@ -17,7 +17,14 @@ router.get('/users', async(req, res) => {
 router.get('/', async (req, res) => {
     try{
         let email = req.oidc.user.email;
-        let user = await User.findOne({email: email}).populate("projects").populate("tasks").lean();
+        let user = await User.findOne({email: email}).populate({
+            path: "projects", 
+            populate: {
+                path: "collaborators", 
+                model: "User"
+            }
+
+        }).populate("tasks").lean();
         if(!user) {
             user = await User.create({email: email})
         } 

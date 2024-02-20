@@ -22,9 +22,9 @@ router.post('/:projectId/tasks', projectAuth ,async (req, res) => {
         //iterate through assignees and add this task each users task list
         if(req.body.assignees){         
             for(let i = 0; i < req.body.assignees.length; i++) {
-                await User.findOneAndUpdate(
-                    {id: req.body.assignees[i]}, 
-                    {$addToSet: {tasks: task}}
+                await User.findByIdAndUpdate(
+                    req.body.assignees[i], 
+                    {$addToSet: {tasks: task._id}}
                 )
             }
         }
