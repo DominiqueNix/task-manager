@@ -153,9 +153,7 @@ const addCollaborator = (val) => {
     closeBtn.innerHTML = "<i class='bx bx-x-circle'></i>"
     closeBtn.setAttribute("onClick", "removeProjectCollaborator(this.parentElement)")
     span.appendChild(closeBtn)
-    chosenCollaborators.appendChild(span)
-    console.log(projectCollaborators)
-    
+    chosenCollaborators.appendChild(span)    
 }
 
 const removeProjectCollaborator = (val) => {
@@ -168,9 +166,29 @@ const removeProjectCollaborator = (val) => {
     const removed = projectCollaborators.indexOf(removedCollab)
     projectCollaborators.splice(removed, 1)
     chosenCollaborators.removeChild(val)
-    console.log(projectCollaborators)
 }
 
+//add new project
 
+document.getElementById('new-project-submit').addEventListener('click', async() => {
+    
+    let title = document.getElementById('project-title').value.trim();
+    let description = document.getElementById('project-description').value.trim();
+    let onlyOwnerEdit = document.getElementById('only-owner-edit').checked
+    let collaborators = projectCollaborators
 
+    if(title) {
+        const res = await fetch(`/projects`, {
+            method:'POST', 
+            body: JSON.stringify({title, description, onlyOwnerEdit, collaborators}), 
+            headers: {'Content-Type': 'application/json'}
+        })
+
+        if(res.ok) {
+            location.reload()
+        } else {
+            alert(res.statusText)
+        }
+    }
+})
 //grab btn for pojects and redirect to a single project view 

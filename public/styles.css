@@ -59,3 +59,20 @@
     font-size: 1rem !important;
     font-weight: 300 !important;
 }
+
+#project-collaborators{
+    border: 1px #dee2e6 solid !important;
+    border-radius: 0.365rem !important;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    display:block !important;
+    width:100% !important;
+    padding: .375rem .75rem !important;
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
+    font-weight: 400 !important;
+
+}
+
+#project-collaborators:focus{
+    border: rgba(13, 110, 253, 0.25) !important;
+}
