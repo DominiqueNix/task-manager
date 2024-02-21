@@ -7,20 +7,23 @@ let totalNotStartedTasks = 0;
 
 tasks.forEach(task => {
     // console.log(task.status)
-   if(task.status == "in-progress"){ 
-    totalInProgressTasks++
-   } else if(task.status == "complete"){
-    totalCompleteTasks +1
-   }else if(task.status == "not started"){
-    totalNotStartedTasks +=1;
+   if(task.status == "In progress"){ 
+    totalInProgressTasks+=1
+   } else if(task.status == "Complete"){
+    totalCompleteTasks+=1
+   }else if(task.status == "Not started"){
+    totalNotStartedTasks+=1
    }
 })
-
+// console.log(totalCompleteTasks)
 document.getElementById("total").textContent = totalTasks
 document.getElementById("not-started").textContent = totalNotStartedTasks
 document.getElementById("in-progress").textContent = totalInProgressTasks
 document.getElementById("complete").textContent = totalCompleteTasks
 document.getElementById("sub-title").textContent = new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})
+
+
+
 
 
 //grab submit btn 
@@ -38,9 +41,21 @@ let projectSelectForm = document.getElementById('task-project')
 let selectedProject;
 
 projects.forEach(p => {
+    //updating the project the user has selected
     if(p._id == projectSelectForm.value){
         selectedProject = p
     }
+
+    //grab the project from the table
+    let tableProject = document.getElementById(`progress-project-${p._id}`)
+    let compT = 0;
+    let totalT = p.tasks.length
+    p.tasks.forEach(t => {
+        if(t.status === 'Complete'){
+            compT += 1
+        }
+    })
+    tableProject.setAttribute('style', `width: ${(compT/totalT || 0)*100}%`)
 })
 
 
@@ -66,7 +81,8 @@ selectedProject.collaborators.forEach(col => {
 
 let newTaskSubmit = document.getElementById("new-task-submit")
 
-newTaskSubmit.addEventListener('click', async() =>{
+newTaskSubmit.addEventListener('click', async(e) =>{
+    e.preventDefault()
     let projectId = selectedProject._id
     let title = document.getElementById('task-title').value.trim()
     let description = document.getElementById('task-description').value.trim()
@@ -75,7 +91,14 @@ newTaskSubmit.addEventListener('click', async() =>{
     let dueDate = document.getElementById('due-date').value
     let assignees = []
     document.querySelectorAll(".task-checkbox:checked").forEach(node => assignees.push(node.value))
-    
+
+    // console.log(projectId)
+    // console.log(title)
+    // console.log(description)
+    // console.log(priority)
+    // console.log(status)
+    // console.log(dueDate)
+    // console.log(assignees)
     if(title) {
         const res = await fetch(`/projects/${projectId}/tasks`, {
             method:'POST', 
@@ -192,3 +215,5 @@ document.getElementById('new-project-submit').addEventListener('click', async() 
     }
 })
 //grab btn for pojects and redirect to a single project view 
+//updating progress bar in project table
+

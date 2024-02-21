@@ -21,9 +21,14 @@ router.get('/', async (req, res) => {
             path: "projects", 
             populate: {
                 path: "collaborators", 
-                model: "User"
+                model: "User", 
             }
-
+        }).populate({
+            path: "projects", 
+            populate: {
+                path: "tasks", 
+                model: "Task", 
+            }
         }).populate("tasks").lean();
         if(!user) {
             user = await User.create({email: email})

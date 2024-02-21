@@ -1,3 +1,16 @@
+:root {
+    --text-gray: #575757;
+    --btn-green: #BDE4B3;
+    --btn-text-green: #687E62;
+    --light-blue: #DDE9FF;
+    --dark-blue: #5A5985;
+    --yellow: #FCFFDD;
+    --text-yellow: #9A6600;
+    --light-green: #E4FFDD;
+    --text-green: #628559;
+    --light-orange: #FFF2DD;
+}
+
 .nav-link {
     color:white !important;
     font-size: 1.5rem !important;
@@ -76,3 +89,95 @@
 #project-collaborators:focus{
     border: rgba(13, 110, 253, 0.25) !important;
 }
+
+.nav-item {
+    font-size: 1.5rem !important;
+}
+
+.nav-btn{
+    background-color: rgb(33, 37, 41);
+    color: white;
+    border: none;
+}
+
+.nav-btn:hover {
+    color: #9e0000 !important;
+}
+
+#top-section{
+    width: 95%;
+    margin-top: 3%;
+    height: 50vh;
+    margin-left: 2%;
+}
+
+
+.top-row{
+    color: var(--text-gray) !important;
+    font-weight: 400;
+}
+
+.description{
+    color: var(--text-gray) !important;
+}
+
+.view-more-btn{
+    background-color: var(--btn-green) !important;
+    color: var(--btn-text-green);
+}
+
+.table-btn{
+    white-space: nowrap;
+}
+
+#task-card{
+    margin-right: 3%;
+    height: 65% !important;
+    overflow: scroll;
+}
+
+.task-stats {
+    font-size: 1rem;
+    display: flex;
+    flex-direction: row;
+}
+.bx{
+    padding: 8px;
+    border-radius: 50px; 
+    margin-right: 20px;
+}
+
+.bx-note{
+    background-color: lightgrey;
+}
+
+.bx-loader{
+    background-color: var(--light-blue);
+    color: var(--dark-blue);
+}
+
+.bx-pause-circle{
+    background-color: var(--light-orange);
+    color: var(--text-yellow);
+}
+
+.bx-check-circle {
+    background-color: var(--light-green);
+    color: var(--text-green);
+}
+
+.table{
+    height: 65% !important;
+    overflow: scroll;
+}
+
+.cell-content{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+/* .task-tot{
+    margin-right: 10%;
+} */
