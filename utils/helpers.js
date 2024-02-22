@@ -15,15 +15,11 @@ module.exports = {
         if(string1 == string2){return options.fn(this)}
         return options.inverse(this)
     }, 
-    findProjectName: (obj, taskId) => {
-        console.log(obj)
-        console.log(taskId)
-        // obj.forEach(p => {
-        //     p.tasks.forEach(t => {
-        //         if(t._id === taskId){
-        //             return p.title
-        //         }
-        //     })
-        // })
+    projectPermissions: (ownerId, userId, editPermissions, options) => {
+        if(editPermissions && !ownerId.equals(userId)){
+            return options.inverse(this)
+        } else {
+            return options.fn(this)
+        }
     }
 }

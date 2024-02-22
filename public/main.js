@@ -3,6 +3,7 @@ let taskCheckboxMain =  document.getElementById('task-assignees');
 let projectDataMail = taskCheckboxMain.getAttribute('data-value');
 let projectsMain = JSON.parse(projectDataMail);
 
+if(projectsMain.length){ 
 //for the selected project
 let projectSelectForm = document.getElementById('task-project')
 
@@ -17,25 +18,26 @@ projectsMain.forEach(p => {
 
 console.log(selectedProject)
 
-selectedProject.collaborators.forEach(col => {
-    console.log(col)
-    let formDiv = document.createElement('div');
-    formDiv.classList.add("form-check")
-    let input = document.createElement('input');
-    input.setAttribute('type', 'checkbox')
-    input.setAttribute('value', col._id)
-    input.setAttribute('id', col._id)
-    input.classList.add('form-check-input')
-    input.classList.add('task-checkbox')
-    let label = document.createElement('label')
-    label.setAttribute('for', col._id)
-    label.classList.add('form-check-label')
-    label.textContent = col.email
-    formDiv.appendChild(input)
-    formDiv.appendChild(label)
-    
-    taskCheckboxMain.appendChild(formDiv)
-})
+    selectedProject.collaborators.forEach(col => {
+        console.log(col)
+        let formDiv = document.createElement('div');
+        formDiv.classList.add("form-check")
+        let input = document.createElement('input');
+        input.setAttribute('type', 'checkbox')
+        input.setAttribute('value', col._id)
+        input.setAttribute('id', col._id)
+        input.classList.add('form-check-input')
+        input.classList.add('task-checkbox')
+        let label = document.createElement('label')
+        label.setAttribute('for', col._id)
+        label.classList.add('form-check-label')
+        label.textContent = col.email
+        formDiv.appendChild(input)
+        formDiv.appendChild(label)
+        
+        taskCheckboxMain.appendChild(formDiv)
+    })
+}
 
 let newTaskSubmit = document.getElementById("new-task-submit")
 
@@ -49,7 +51,7 @@ newTaskSubmit.addEventListener('click', async(e) =>{
     let dueDate = document.getElementById('due-date').value
     let assignees = []
     document.querySelectorAll(".task-checkbox:checked").forEach(node => assignees.push(node.value))
-    if(title) {
+    if(project && title) {
         const res = await fetch(`/projects/${projectId}/tasks`, {
             method:'POST', 
             body: JSON.stringify({title, description, priority, status,dueDate ,assignees}), 
@@ -142,12 +144,12 @@ const removeProjectCollaborator = (val) => {
 }
 
 //add new project
-
 document.getElementById('new-project-submit').addEventListener('click', async() => {
     
     let title = document.getElementById('project-title').value.trim();
     let description = document.getElementById('project-description').value.trim();
-    let onlyOwnerEdit = document.getElementById('only-owner-edit').checked
+    let checkVal = document.getElementById('only-owner-edit').checked
+    let onlyOwnerEdit = !checkVal;
     let collaborators = projectCollaborators
 
     if(title) {

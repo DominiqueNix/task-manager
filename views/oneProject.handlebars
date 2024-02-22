@@ -1,5 +1,17 @@
 <div class="jumbotron m-2 w-75">
-  <h1 class="display-4">{{project.title}}</h1>
+  <h1 class="display-4">
+    {{project.title}}
+    {{#projectPermissions project.owner user._id project.onlyOwnerEdit}}
+     <div class="btn-group">
+          <button type="button" class="btn btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='bx bx-dots-vertical-rounded'></i></button>
+          <div class="dropdown-menu">
+            <button data-id="{{task._id}}" class="update-task dropdown-item" href="#"><i class='bx bx-edit-alt mx-1'></i>Update Project</button>
+            <div class="dropdown-divider"></div>
+            <button data-id="{{task._id}}" class="delete-task dropdown-item"><i class='bx bx-trash mx-1 text-danger' ></i>Delete Project</button>
+        </div>    
+    </div>
+    {{/projectPermissions}}
+    </h1>
   <h4 class="lead">{{project.description}}</h6>  
 </div>
   <span class="mx-2 my-5 h5">Collaboators: </span>

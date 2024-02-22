@@ -42,6 +42,16 @@ router.post('/', async (req, res) => {
 
         let project = await Project.create({title, description, onlyOwnerEdit, collaborators});
 
+        //adding this projeoct to all collabortors project list
+        if(req.body.collaborators){         
+            for(let i = 0; i < req.body.collaborators.length; i++) {
+                await User.findByIdAndUpdate(
+                    req.body.collaborators[i], 
+                    {$addToSet: {projects: project._id}}
+                )
+            }
+        }
+
         //setting current user as the owner and add them as a collaborator
         await Project.findByIdAndUpdate(
             project._id, 
