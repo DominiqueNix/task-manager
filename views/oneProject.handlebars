@@ -7,20 +7,12 @@
       <button type="button" class="btn btn-secondary rounded-circle" data-toggle="tooltip" data-placement="top" title="{{u.email}}">{{firstInital u}}</button>
   {{/each}}
 
-<div id="progress-section" class="my-5 w-75 mx-2">
+<div id="progress-section" class="my-5 w-75 mx-2" data-value="{{json project.tasks}}">
   <h3>Progress</h3>
-      <div class="progress mb-2">
-      <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 10%"></div>
-      <span>20% Tasks Not started</span>
-    </div>
+  <p id="project-task-c-text"></p>
     <div class="progress mb-2">
-      <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 25%" ></div>
-      <span>20% Tasks Complete</span>
-    </div>
-    <div class="progress mb-2">
-      <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 50%"></div>
-      <span>20% Tasks In Progress</span>
-    </div>
+      <div id="project-task-complete" class="progress-bar progress-bar-striped bg-success" role="progressbar"></div>
+    </div> 
 </div>
 <div class="m-2 d-flex display-content-center flex-column">
 <h3 class="text-start">All Tasks</h3>

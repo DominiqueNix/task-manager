@@ -3,8 +3,13 @@ const {User } = require('../models');
 
 router.get('/', async(req, res) => {
     try{
-        let user = await User.findOne({email: req.oidc.user.email}).populate("tasks projects").lean()
-
+        let user = await User.findOne({email: req.oidc.user.email}).populate({ 
+            path: "tasks", 
+            populate: {
+                path: "assignees", 
+                select: "email",
+                model: "User"
+            }}).populate("projects").lean()
         res.render("tasks", {user: user})
         // console.log('hi')
     }catch(err){

@@ -1,6 +1,113 @@
-{{!-- {{#each user.tasks as |task|}}
-    <div>
-        <h1>{{task.title}}</h1>
+<div class="jumbotron m-2 w-75">
+  <h1 class="display-4">My Tasks</h1>
+</div>
+<div id="progress-section" class="my-5 w-75 mx-2" data-value="{{json user.tasks}}">
+  <h3>Progress</h3>
+  <p id="task-c-text"></p>
+    <div class="progress mb-2">
+      <div id="task-complete" class="progress-bar progress-bar-striped bg-success" role="progressbar"></div>
+    </div> 
+</div>
+<div id="tasks-container" class="w-full h-75 m-2 border bs-border-color-translucent rounded d-flex flex-row">
+    <div class="task-boxes my-2 mx-5 border bs-border-color-translucent rounded">
+           <h4 class=" m-2 display-6">Backlog</h4>        
+        {{#each user.tasks as |task|}}
+            {{#stringCompare task.status "Not started"}}
+                <div class="p-2 boxes-3 m-2 border bs-border-color-translucent rounded d-flex flex-column justify-content-between">
+                    <div class="d-flex flex-row justify-content-between align-items-center">
+                        <div >
+                            <span class="task-box-status priority p-1">{{task.status}}</span>
+                            <span class="task-box-priorites status p-1">{{task.priority}}</span>
+                        </div>
+                        <button type="button" class="btn btn-light"><i class='bx bx-dots-vertical-rounded'></i></button>
+                    </div>
+                    <h3>{{task.title}}</h3>
+                    <p class="text-muted">{{task.description}}</p>
+                    
+                    <div class="task-box-footer">
+                     <hr>   
+                        <div class="d-flex flex-row justify-content-between align-items-center">
+                            <div>
+                                {{#each task.assignees as |u|}}
+                                    <button type="button" class="btn btn-secondary rounded-circle" data-toggle="tooltip" data-placement="top" title="{{u.email}}">{{firstInital u}}</button>
+                                {{/each}}   
+                            </div>
+                            <span class="text-muted">{{toStringDate task.dueDate}}</span>  
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+            {{/stringCompare}}
+            {{!-- {{task.title}} --}}
+        {{/each}}
     </div>
-{{/each}} --}}
-<h1>Hi</h1>
+    <div class="task-boxes my-2 border bs-border-color-translucent rounded">
+        <h4 class="m-2 display-6">In progress</h4>
+          {{#each user.tasks as |task|}}
+            {{#stringCompare task.status "In progress"}}
+                <div class="p-2 boxes-3 m-2 border bs-border-color-translucent rounded d-flex flex-column justify-content-between">
+                    <div class="d-flex flex-row justify-content-between align-items-center">
+                        <div >
+                            <span class="task-box-status priority p-1">{{task.status}}</span>
+                            <span class="task-box-priorites status p-1">{{task.priority}}</span>
+                        </div>
+                        <button type="button" class="btn btn-light"><i class='bx bx-dots-vertical-rounded'></i></button>
+                    </div>
+                    <h3>{{task.title}}</h3>
+                    <p class="text-muted">{{task.description}}</p>
+                    
+                    <div class="task-box-footer">
+                     <hr>   
+                        <div class="d-flex flex-row justify-content-between align-items-center">
+                            <div>
+                                {{#each task.assignees as |u|}}
+                                    <button type="button" class="btn btn-secondary rounded-circle" data-toggle="tooltip" data-placement="top" title="{{u.email}}">{{firstInital u}}</button>
+                                {{/each}}  
+                            </div>
+                            
+                            <span class="text-muted">{{toStringDate task.dueDate}}</span>  
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+            {{/stringCompare}}
+            {{!-- {{task.title}} --}}
+        {{/each}}
+    </div>
+    <div class="task-boxes my-2 mx-5 border bs-border-color-translucent rounded">
+        <h4 class="m-2 display-6">Complete</h4>
+          {{#each user.tasks as |task|}}
+            {{#stringCompare task.status "Complete"}}
+                <div class="p-2 boxes-3 m-2 border bs-border-color-translucent rounded d-flex flex-column justify-content-between">
+                    <div class="d-flex flex-row justify-content-between align-items-center">
+                        <div >
+                            <span class="task-box-status priority p-1">{{task.status}}</span>
+                            <span class="task-box-priorites status p-1">{{task.priority}}</span>
+                        </div>
+                        <button type="button" class="btn btn-light"><i class='bx bx-dots-vertical-rounded'></i></button>
+                    </div>
+                    <h3>{{task.title}}</h3>
+                    <p class="text-muted">{{task.description}}</p>
+                    <div class="task-box-footer">
+                     <hr>   
+                        <div class="d-flex flex-row justify-content-between align-items-center">
+                            <div>
+                                {{#each task.assignees as |u|}}
+                                    <button type="button" class="btn btn-secondary rounded-circle" data-toggle="tooltip" data-placement="top" title="{{u.email}}">{{firstInital u}}</button>
+                                {{/each}}  
+                            </div>
+                              <span class="text-muted">{{toStringDate task.dueDate}}</span>    
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+            {{/stringCompare}}
+            {{!-- {{task.title}} --}}
+        {{/each}}
+    </div>
+</div>
+
+<script src="/tasks.js"></script>

@@ -10,5 +10,20 @@ module.exports = {
     },
     firstInital: (obj) => {
         return obj.email.charAt(0).toUpperCase()
+    }, 
+    stringCompare: (string1, string2, options) => {
+        if(string1 == string2){return options.fn(this)}
+        return options.inverse(this)
+    }, 
+    findProjectName: (obj, taskId) => {
+        console.log(obj)
+        console.log(taskId)
+        // obj.forEach(p => {
+        //     p.tasks.forEach(t => {
+        //         if(t._id === taskId){
+        //             return p.title
+        //         }
+        //     })
+        // })
     }
 }

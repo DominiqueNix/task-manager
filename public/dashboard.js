@@ -23,7 +23,6 @@ document.getElementById("complete").textContent = totalCompleteTasks
 document.getElementById("sub-title").textContent = new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})
 
 
-console.log(new Date("Thu Feb 15 2024 00:00:00 GMT-0600 (Central Standard Time)").toLocaleDateString('en-us', { year:"numeric", month:"short", day:"numeric"}))
 
 // console.log("Thu Feb 15 2024 00:00:00 GMT-0600 (Central Standard Time)")
 //grab submit btn 

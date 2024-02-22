@@ -25,3 +25,22 @@ for(let i = 0; i < statuss.length; i++){
         statuss[i].classList.add('blue')
     }
 }
+
+let taskData = document.getElementById('progress-section').getAttribute('data-value');
+let allProjectTasks = JSON.parse(taskData);
+
+let completedTaskprogressbar = document.getElementById("project-task-complete")
+let completedTaskprogressbarText = document.getElementById("project-task-c-text")
+
+let comp = 0;
+    let total = allProjectTasks.length;
+
+allProjectTasks.forEach( task => {
+    if(task.status == "Complete"){
+        comp+=1
+    }
+})
+
+completedTaskprogressbar.setAttribute('style', `width: ${(comp/total || 0)*100}%`)
+completedTaskprogressbarText.textContent = `${Math.round((comp/total || 0)*100)}% of tasks completed`
+
