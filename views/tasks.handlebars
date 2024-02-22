@@ -8,18 +8,26 @@
       <div id="task-complete" class="progress-bar progress-bar-striped bg-success" role="progressbar"></div>
     </div> 
 </div>
-<div id="tasks-container" class="w-full h-75 m-2 border bs-border-color-translucent rounded d-flex flex-row">
+<div id="tasks-container" class="w-full h-75 m-2 border bs-border-color-translucent rounded d-flex flex-row" data-value="{{json user.projects}}">
     <div class="task-boxes my-2 mx-5 border bs-border-color-translucent rounded">
            <h4 class=" m-2 display-6">Backlog</h4>        
         {{#each user.tasks as |task|}}
             {{#stringCompare task.status "Not started"}}
                 <div class="p-2 boxes-3 m-2 border bs-border-color-translucent rounded d-flex flex-column justify-content-between">
                     <div class="d-flex flex-row justify-content-between align-items-center">
-                        <div >
+                        <div>
                             <span class="task-box-status priority p-1">{{task.status}}</span>
                             <span class="task-box-priorites status p-1">{{task.priority}}</span>
                         </div>
-                        <button type="button" class="btn btn-light"><i class='bx bx-dots-vertical-rounded'></i></button>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='bx bx-dots-vertical-rounded'></i></button>
+                            <div class="dropdown-menu">
+                                <button data-id="{{task._id}}" class="update-task dropdown-item" href="#"><i class='bx bx-edit-alt mx-1'></i>Update task</button>
+                                <div class="dropdown-divider"></div>
+                                <button data-id="{{task._id}}" class="delete-task dropdown-item"><i class='bx bx-trash mx-1 text-danger' ></i>Delete task</button>
+                            </div>    
+                        </div>
+                        
                     </div>
                     <h3>{{task.title}}</h3>
                     <p class="text-muted">{{task.description}}</p>
@@ -52,7 +60,14 @@
                             <span class="task-box-status priority p-1">{{task.status}}</span>
                             <span class="task-box-priorites status p-1">{{task.priority}}</span>
                         </div>
-                        <button type="button" class="btn btn-light"><i class='bx bx-dots-vertical-rounded'></i></button>
+                         <div class="btn-group">
+                            <button type="button" class="btn btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='bx bx-dots-vertical-rounded'></i></button>
+                            <div class="dropdown-menu">
+                                <button data-id="{{task._id}}" class="update-task dropdown-item" href="#"><i class='bx bx-edit-alt mx-1'></i>Update task</button>
+                                <div class="dropdown-divider"></div>
+                                <button data-id="{{task._id}}" class="delete-task dropdown-item"><i class='bx bx-trash mx-1 text-danger' ></i>Delete task</button>
+                            </div>    
+                        </div>
                     </div>
                     <h3>{{task.title}}</h3>
                     <p class="text-muted">{{task.description}}</p>
@@ -86,7 +101,14 @@
                             <span class="task-box-status priority p-1">{{task.status}}</span>
                             <span class="task-box-priorites status p-1">{{task.priority}}</span>
                         </div>
-                        <button type="button" class="btn btn-light"><i class='bx bx-dots-vertical-rounded'></i></button>
+                         <div class="btn-group">
+                            <button type="button" class="btn btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='bx bx-dots-vertical-rounded'></i></button>
+                            <div class="dropdown-menu">
+                                <button data-id="{{task._id}}" class="update-task dropdown-item" href="#"><i class='bx bx-edit-alt mx-1'></i>Update task</button>
+                                <div class="dropdown-divider"></div>
+                                <button data-id="{{task._id}}" class="delete-task dropdown-item"><i class='bx bx-trash mx-1 text-danger' ></i>Delete task</button>
+                            </div>    
+                        </div>
                     </div>
                     <h3>{{task.title}}</h3>
                     <p class="text-muted">{{task.description}}</p>

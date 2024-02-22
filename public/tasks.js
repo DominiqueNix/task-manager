@@ -39,5 +39,35 @@ tasks.forEach( task => {
     }
 })
 
+
 completedTaskprogressbar.setAttribute('style', `width: ${(comp/total || 0)*100}%`)
 completedTaskprogressbarText.textContent = `${Math.round((comp/total || 0)*100)}% of tasks completed`
+
+let projectData = document.getElementById("tasks-container").getAttribute('data-value')
+let projects = JSON.parse(projectData);
+
+const handleTaskDelete = async(taskId) => {
+let projectId;
+projects.forEach(p => {
+    if(p.tasks.includes(taskId)) 
+    projectId = p._id
+})
+
+    const res = await fetch(`/projects/${projectId}/tasks/${taskId}`, {
+        method: 'DELETE',   
+    })
+    if(res.ok){
+        location.reload()
+    }else {
+        alert(res.statusText)
+    }
+}
+
+
+let taskDeletebtns = document.getElementsByClassName('delete-task')
+
+for(let i = 0; i < taskDeletebtns.length; i++){
+    let currDeleteBtn = taskDeletebtns[i]
+    let currId = currDeleteBtn.getAttribute('data-id')
+    currDeleteBtn.addEventListener('click', () => {handleTaskDelete(currId)})
+}
