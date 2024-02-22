@@ -71,3 +71,4 @@ for(let i = 0; i < taskDeletebtns.length; i++){
     let currId = currDeleteBtn.getAttribute('data-id')
     currDeleteBtn.addEventListener('click', () => {handleTaskDelete(currId)})
 }
+

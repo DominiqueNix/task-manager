@@ -9,7 +9,13 @@ router.get('/', async(req, res) => {
                 path: "assignees", 
                 select: "email",
                 model: "User"
-            }}).populate("projects").lean()
+            }}).populate({
+                path: 'projects', 
+                populate: {
+                    path: "collaborators", 
+                    model: "User"
+                }
+            }).lean()
         res.render("tasks", {user: user})
         // console.log('hi')
     }catch(err){
