@@ -3,9 +3,22 @@ const { Project, User } = require('../models');
 const middleware = {
     projectAuth: async function(req, res, next){
     // finds the current user (from auth0 email)
-    let currUser = await User.findOne({email: req.oidc.user.email});
+    let currUser = await User.findOne({email: req.oidc.user.email}).populate({
+        path: "projects", 
+        populate: {
+            path: "collaborators", 
+            model: "User"
+        }
+
+    }).populate("tasks").lean();
     //finds the projects from the params
-    let project = await Project.findById(req.params.projectId).populate('tasks').lean();
+    let project = await Project.findById(req.params.projectId).populate({ 
+        path: "tasks", 
+            populate: {
+                path: "assignees", 
+                select: "email",
+                model: "User"
+            }}).populate('collaborators', 'email').lean();
     req.user = currUser;
     if(project) {
             //keep track of users who are collaborators on this project 
@@ -22,7 +35,7 @@ const middleware = {
                     for(let j = 0; j <req.project.collaborators.length; j++) {
                         for(let i = 0; i < req.body.assignees.length; i++){
                             let user = await User.findById(req.body.assignees[i])
-                            if(req.project.collaborators[j].equals(user._id)){
+                            if(req.project.collaborators[j]._id.equals(user._id)){
                                 userCanBeAdded.push(true)
                             }
                         }

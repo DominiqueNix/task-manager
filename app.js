@@ -3,6 +3,7 @@ const express = require('express');
 const hbs = require('express-handlebars');
 const {auth} = require('express-openid-connect')
 
+const allTaskRoute = require('./routes/allTaskRoute')
 const projectRoutes = require('./routes/projectRoute')
 const homeRoutes = require('./routes/homeRoute');
 const taskRoutes = require('./routes/taskRoute')
@@ -46,7 +47,8 @@ app.use(auth(config));
 
 app.use('/projects', projectRoutes);
 app.use('/dashboard', homeRoutes);
-app.use('/projects', taskRoutes)
+app.use('/projects', taskRoutes);
+app.use('/tasks', allTaskRoute);
 
 module.exports = app
 

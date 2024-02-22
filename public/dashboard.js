@@ -23,9 +23,9 @@ document.getElementById("complete").textContent = totalCompleteTasks
 document.getElementById("sub-title").textContent = new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})
 
 
+console.log(new Date("Thu Feb 15 2024 00:00:00 GMT-0600 (Central Standard Time)").toLocaleDateString('en-us', { year:"numeric", month:"short", day:"numeric"}))
 
-
-
+// console.log("Thu Feb 15 2024 00:00:00 GMT-0600 (Central Standard Time)")
 //grab submit btn 
 //grab all the task divs
 
@@ -214,6 +214,24 @@ document.getElementById('new-project-submit').addEventListener('click', async() 
         }
     }
 })
+
+
+//sort tasks by upcoming: soonest tasks duw within the next two weeks
+for(let i = 0; i < tasks.length-1; i++){
+
+    let currTask = new Date(tasks[i].dueDate).getTime()
+    let nextTask = new Date(tasks[i+1].dueDate).getTime()
+    let twoWeeksAway = new Date()
+    twoWeeksAway.setDate(twoWeeksAway.getDate() +14)
+    if(nextTask > currTask && nextTask < twoWeeksAway.getTime()){
+        let temp = tasks[i]
+        tasks[i] = tasks[i+1]
+        tasks[i+1] = temp
+    }   
+}
+
+
+
 //grab btn for pojects and redirect to a single project view 
 //updating progress bar in project table
 

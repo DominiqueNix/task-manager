@@ -4,5 +4,11 @@ module.exports = {
     }, 
     json: (content) => {
         return JSON.stringify(content)
+    },
+    toStringDate: (date) => {
+        return new Date(date).toLocaleDateString('en-us', { year:"numeric", month:"short", day:"numeric"})
+    },
+    firstInital: (obj) => {
+        return obj.email.charAt(0).toUpperCase()
     }
 }

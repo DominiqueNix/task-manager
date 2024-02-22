@@ -1,14 +1,66 @@
-<div class="jumbotron m-5">
+<div class="jumbotron m-2 w-75">
   <h1 class="display-4">{{project.title}}</h1>
   <h4 class="lead">{{project.description}}</h6>  
 </div>
-<div class="m-5 text-center d-flex display-content-center flex-column w-50">
-<h4 >All Tasks</h6>
-{{#each project.tasks as |task|}}
-    <button class="btn btn-light m-2">
-        <p>{{task.title}}</p>
-        <p>status: <span class="badge bg-primary">{{task.status}}</span></p>
-        <p>priority: <span class="badge bg-primary">{{task.priority}}</span></p>
-    </button>
-{{/each}}
+  <span class="mx-2 my-5 h5">Collaboators: </span>
+ {{#each project.collaborators as |u|}}
+      <button type="button" class="btn btn-secondary rounded-circle" data-toggle="tooltip" data-placement="top" title="{{u.email}}">{{firstInital u}}</button>
+  {{/each}}
+
+<div id="progress-section" class="my-5 w-75 mx-2">
+  <h3>Progress</h3>
+      <div class="progress mb-2">
+      <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 10%"></div>
+      <span>20% Tasks Not started</span>
+    </div>
+    <div class="progress mb-2">
+      <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 25%" ></div>
+      <span>20% Tasks Complete</span>
+    </div>
+    <div class="progress mb-2">
+      <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 50%"></div>
+      <span>20% Tasks In Progress</span>
+    </div>
 </div>
+<div class="m-2 d-flex display-content-center flex-column">
+<h3 class="text-start">All Tasks</h3>
+        <table class="table border bs-border-color-translucent">
+          <thead>
+            <tr class="table-active">
+              <th class="top-row"scope="col">Name</th>
+              <th class="top-row"scope="col">Due Date</th>
+              <th class="top-row"scope="col">Status</th>
+              <th class="top-row"scope="col">Priority</th>
+              <th class="top-row"scope="col">Assignees</th>
+              <th class="top-row w-25"scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+              {{#each project.tasks as |task|}} 
+                <tr class="m-2">
+                  <td><div class="cell-content">{{task.title}}</div></td>
+                  <td><div class="cell-content">{{toStringDate task.dueDate}}</div></td>
+                  <td><div class="cell-content status justify-content-center">{{task.status}}</div></td>
+                  <td><div class="cell-content priority justify-content-center">{{task.priority}}</div></td>
+                  <td><div class="cell-content">
+                    {{#each task.assignees as |u|}}
+                      <div class="rounded-circle bg-secondary text-white m-1">
+                        <button type="button" class="btn btn-secondary rounded-circle" data-toggle="tooltip" data-placement="top" title="{{u.email}}">{{firstInital u}}</button>
+                      </div>
+                    {{/each}}
+                  </div></td>
+                  <td class="table-btn text-end">
+                    <div class="cell-content justify-content-center">
+                        <a href="/projects/{{task._id}}" class="">
+                          <button class="btn view-more-btn">View More</button>
+                        </a>
+                    </div>
+                  </td>
+                </tr>
+              {{/each}}
+          </tbody>
+        </table>
+</div>
+
+<script src="/oneProject.js"></script>
+
