@@ -62,6 +62,23 @@
     background: #eee;
   }
 
+  #update-result {
+    border: 1px dotted #ccc;
+    padding: 3px;
+    width: 45%;
+  }
+  #update-result ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  #update-result ul li {
+    padding: 5px 0;
+  }
+  #update-result ul li:hover {
+    background: #eee;
+  }
+
 .remove-collab{
     margin-left: .5rem;
     font-size: 1.2rem;
@@ -117,6 +134,14 @@
 .top-row{
     color: var(--text-gray) !important;
     font-weight: 400;
+}
+
+.title-row{
+    width: 20% !important;
+}
+
+.description-row{
+    width: 40% !important;
 }
 
 .description{
@@ -212,7 +237,7 @@
 }
 
 .boxes-3{
-    height: 30%;
+    /* height: 30%; */
 }
 
 .bx-dots-vertical-rounded{

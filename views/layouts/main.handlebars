@@ -78,8 +78,9 @@
           <div class="form-group mb-4">
             <label for="task-project">Project</label>
               <select id="task-project" class="form-control">
+                <option value="" selected disabled>Please choose project...</option>
                 {{#each user.projects as |project|}}
-                  <option value="{{project._id}}">{{project.title}}</option>             
+                  <option value="{{project._id}}" >{{project.title}}</option>             
                 {{/each}}
             </select>
            </div>
@@ -158,7 +159,7 @@
             <input class="form-check-input only-owner-edit" type="checkbox" id="only-owner-edit" checked>
             <label class="form-check-label" for="only-owner-edit">All collaboators can edit or delete this project</label>
           </div>
-          <div id="chosen-collaborators"></div>
+          <div id="chosen-collaborators" data-value="{{user.email}}"></div>
             <div class="mb-4 d-block">
               <p class="mb-0">Collaboators</p>
               <input type="text" name="project-collaborators" id="project-collaborators" onKeyUp="showResults(this.value)" /> 
@@ -175,9 +176,9 @@
 </div>
                     {{/if}}
                     {{{ body }}}
-                </div>
+                {{!-- </div>
             </div>
-        </div> 
+        </div>  --}}
     
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

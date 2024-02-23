@@ -3,38 +3,70 @@ let taskCheckboxMain =  document.getElementById('task-assignees');
 let projectDataMail = taskCheckboxMain.getAttribute('data-value');
 let projectsMain = JSON.parse(projectDataMail);
 
+// let selectedProject;
+
+// const changeProjectId = (id) => {
+//     projectSelectForm.setAttribute('value', id)
+//     console.log(projectSelectForm.value)
+//     if(projectsMain.length) {
+//         projectsMain.forEach(p => {
+//         //updating the project the user has selected
+//         if(p._id == projectSelectForm.value){
+//             selectedProject = p
+//         }
+//     })
+//     }
+// }
+
 if(projectsMain.length){ 
 //for the selected project
 let projectSelectForm = document.getElementById('task-project')
 
+//project not updatating maye so an onlick form this with the 
+//function in the html like done with the autocomplete stuff
+
+
+
+
 let selectedProject;
 
-projectsMain.forEach(p => {
+projectSelectForm.addEventListener('click', () => {
+    projectsMain.forEach(p => {
     //updating the project the user has selected
     if(p._id == projectSelectForm.value){
         selectedProject = p
     }
 })
 
-    selectedProject.collaborators.forEach(col => {
-        let formDiv = document.createElement('div');
-        formDiv.classList.add("form-check")
-        let input = document.createElement('input');
-        input.setAttribute('type', 'checkbox')
-        input.setAttribute('value', col._id)
-        input.setAttribute('id', col._id)
-        input.classList.add('form-check-input')
-        input.classList.add('task-checkbox')
-        let label = document.createElement('label')
-        label.setAttribute('for', col._id)
-        label.classList.add('form-check-label')
-        label.textContent = col.email
-        formDiv.appendChild(input)
-        formDiv.appendChild(label)
-        
-        taskCheckboxMain.appendChild(formDiv)
-    })
-}
+    if(document.getElementsByClassName('assignee-form-list')){
+        let one = document.getElementsByClassName('assignee-form-list')
+        console.log("The length of the div is: "+one.length)
+        for(let i = 0; i < one.length; i++){
+            one[i].remove()
+            one[one.length-1].remove()
+        }
+    }
+
+        selectedProject.collaborators.forEach(col => {
+            let formDiv = document.createElement('div');
+            formDiv.classList.add("form-check", "assignee-form-list")
+            let input = document.createElement('input');
+            input.setAttribute('type', 'checkbox')
+            input.setAttribute('value', col._id)
+            input.setAttribute('id', col._id)
+            input.classList.add('form-check-input')
+            input.classList.add('task-checkbox')
+            let label = document.createElement('label')
+            label.setAttribute('for', col._id)
+            label.classList.add('form-check-label')
+            label.textContent = col.email
+            formDiv.appendChild(input)
+            formDiv.appendChild(label)
+            
+            taskCheckboxMain.appendChild(formDiv)
+        })
+})
+
 
 let newTaskSubmit = document.getElementById("new-task-submit")
 
@@ -48,7 +80,7 @@ newTaskSubmit.addEventListener('click', async(e) =>{
     let dueDate = document.getElementById('due-date').value
     let assignees = []
     document.querySelectorAll(".task-checkbox:checked").forEach(node => assignees.push(node.value))
-    if(project && title) {
+    if(projectId && title) {
         const res = await fetch(`/projects/${projectId}/tasks`, {
             method:'POST', 
             body: JSON.stringify({title, description, priority, status,dueDate ,assignees}), 
@@ -62,8 +94,11 @@ newTaskSubmit.addEventListener('click', async(e) =>{
         }
     }
 })
+}
 
 //autocomplete for collaborators 
+let chosenCollaborators = document.getElementById("chosen-collaborators")
+let currentUser = chosenCollaborators.getAttribute('data-value')
 let users = [];
 let usersEmail = []
 
@@ -71,7 +106,11 @@ document.getElementById('projectModalBtn').addEventListener('click', async () =>
     const res = await fetch('/dashboard/users')
     if(res.ok) {
         users = await res.json()
-        users.forEach(u => usersEmail.push(u.email))
+        users.forEach(u => {
+            if(u.email !== currentUser){
+            usersEmail.push(u.email)
+            }
+        })
     } else {
         alert(res.statusText)
     }
@@ -102,11 +141,10 @@ const showResults = (val) => {
         ul.appendChild(item)
     }
     res.appendChild(ul)
-
-
 }
+
 let projectCollaborators = [];
-let chosenCollaborators = document.getElementById("chosen-collaborators")
+
 
 const addCollaborator = (val) => {
     let newCollab;

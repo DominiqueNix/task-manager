@@ -76,49 +76,55 @@ router.post('/', async (req, res) => {
 router.put('/:projectId', [projectAuth, projectAdmin] ,async(req, res) => {
     try{
 
-        //will add any current collborators so that they aren't lost when !!!Prevents deleting collaborators => should maybe be handled on front-end
-                // => so in FE form automatically populates all collaborators (minus owner b/c they can't be removed/and it's automatically hanlded in back)
-        //req.body is being set
-        // if(req.body.collaborators){
-        //     req.project.collaborators.forEach(col => req.body.collaborators.push(col)); 
-        // }
-
         //updating a project 
-        const {title, description, collaborators} = req.body;
-
+        const {title, description, collaborators, onlyOwnerEdit} = req.body;
+ 
        await Project.findByIdAndUpdate(
             {_id: req.project._id},
             {$set: {
                 title: title, 
-                description: description, 
-                collaborators: [...req.body.collaborators, req.project.owner]
+                description: description,
+                onlyOwnerEdit: onlyOwnerEdit, 
+                collaborators: [...collaborators, req.project.owner]
             }
             }
         )
           
         //Checks if a user is deleted as a collborator, if so, they are also deleted from any task they might have been assigned
+        //If no assignees exists on that task, the owner is automatically added instead 
+        // or I could create update task on the project view as well
         if(req.body.collaborators) {
+
+
             let updatedProject = await Project.findById(req.project._id);
-            let authUsers = updatedProject.collaborators;
+
+            let authUsers = []
+            updatedProject.collaborators.forEach(u => authUsers.push(u._id));
 
             for(let i = 0; i < updatedProject.tasks.length; i++) {
-                let task = updatedProject.tasks[i];
-                let eachtask = await Task.findById(task._id)
-                let assignees = eachtask.assignees;
-                let newAssignees = [];
-                for(let j=0; j< assignees.length; j++){
+                    let task = updatedProject.tasks[i]
+                    let eachtask = await Task.findById(task)
+                    
+                    let assignees = []
+                    let newAssignees = []
 
-                    if(authUsers.includes(assignees[j])){
+                    if(eachtask.assignees){
                         
-                        newAssignees.push(assignees[j])
-                    } else {
-                        continue
-                    }
-                }
-                await Task.findByIdAndUpdate(
-                    task._id, 
-                    {$set: {assignees: newAssignees}}
-                    )
+                        eachtask.assignees.forEach(u => assignees.push(u));
+
+                        assignees.forEach(a => {
+                            authUsers.forEach(authU => {
+                                if(a.equals(authU)){
+                                    newAssignees.push(a)
+                                }
+                            })
+                        })
+                        await Task.findByIdAndUpdate(
+                            task._id, 
+                            {$set: {assignees: newAssignees}}
+                        )
+
+                    }             
             }
         }
 
