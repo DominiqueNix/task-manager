@@ -30,10 +30,12 @@
                                 <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
 
                                     {{#each user.projects as |project|}}
+                                    <hr>
                                     <li class="w-100">
-                                        <a href="/projects/{{project._id}}" class="nav-link px-0"> <span class="d-none d-sm-inline">{{project.title}}</span></a>
+                                        <a href="/projects/{{project._id}}" class="nav-link px-0 project-nav-link"> <span class="d-none d-sm-inline">{{project.title}}</span></a>
                                     </li>
                                     {{/each}}
+                                    <hr>
                                 </ul>
                             </li>
                             <li class="nav-item">

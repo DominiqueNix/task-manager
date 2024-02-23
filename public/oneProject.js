@@ -1,6 +1,5 @@
 let priority = document.getElementsByClassName('priority')
 let statuss = document.getElementsByClassName('status')
-console.log(priority)
 
 for(let i = 0; i < priority.length; i++){
     let p = priority[i].textContent
@@ -43,4 +42,23 @@ allProjectTasks.forEach( task => {
 
 completedTaskprogressbar.setAttribute('style', `width: ${(comp/total || 0)*100}%`)
 completedTaskprogressbarText.textContent = `${Math.round((comp/total || 0)*100)}% of tasks completed`
+
+const handleProjectDelete = async(projectId) => {
+        const res = await fetch(`/projects/${projectId}`, {
+            method: 'DELETE',   
+        })
+        if(res.ok){
+            document.location.replace('/dashboard')
+        }else {
+            alert(res.statusText)
+        }
+    }
+    
+    
+let projectDeletebtn = document.getElementById('delete-project')
+let currId = document.getElementById("one-project-title").getAttribute('data-value')
+console.log(projectDeletebtn)
+console.log(currId)
+projectDeletebtn.addEventListener('click', () => {handleProjectDelete(currId)})
+
 

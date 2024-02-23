@@ -16,10 +16,7 @@ projectsMain.forEach(p => {
     }
 })
 
-console.log(selectedProject)
-
     selectedProject.collaborators.forEach(col => {
-        console.log(col)
         let formDiv = document.createElement('div');
         formDiv.classList.add("form-check")
         let input = document.createElement('input');

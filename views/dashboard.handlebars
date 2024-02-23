@@ -27,38 +27,40 @@
       </section>
       <section id="project-stats" class="w-75">
         <h3 class="text-start">Project Stats</h3>
-        <table class="table border bs-border-color-translucent">
-          <thead>
-            <tr class="table-active">
-              <th class="top-row"scope="col">Name</th>
-              <th class="top-row"scope="col">Description</th>
-              <th class="top-row w-25"scope="col">Progress</th>
-              <th class="top-row w-25"scope="col"></th>
-            </tr>
-          </thead>
-          <tbody>
-              {{#each user.projects as |project|}} 
-                <tr class="m-2">
-                  <td><div class="cell-content">{{project.title}}</div></td>
-                  <td class="description"><div class="cell-content">{{project.description}}</div></td>
-                  <td class="progress-section">
-                    <div class="cell-content">
-                        <div class="progress w-100">
-                          <div id="progress-project-{{project._id}}" class="progress-bar" role="progressbar" style="width: 33%"></div>
-                        </div> 
-                    </div>
-                  </td>
-                  <td class="table-btn text-end">
-                    <div class="cell-content justify-content-center">
-                        <a href="/projects/{{project._id}}" class="">
-                          <button class="btn view-more-btn">View More</button>
-                        </a>
-                    </div>
-                  </td>
-                </tr>
-              {{/each}}
-          </tbody>
-        </table>
+        <div class="table-container border bs-border-color-translucent">
+          <table class="table ">
+            <thead>
+              <tr class="table-active">
+                <th class="top-row"scope="col">Name</th>
+                <th class="top-row"scope="col">Description</th>
+                <th class="top-row w-25"scope="col">Progress</th>
+                <th class="top-row w-25"scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+                {{#each user.projects as |project|}} 
+                  <tr class="m-2">
+                    <td><div class="cell-content">{{project.title}}</div></td>
+                    <td class="description"><div class="cell-content">{{project.description}}</div></td>
+                    <td class="progress-section">
+                      <div class="cell-content">
+                          <div class="progress w-100">
+                            <div id="progress-project-{{project._id}}" class="progress-bar" role="progressbar" style="width: 33%"></div>
+                          </div> 
+                      </div>
+                    </td>
+                    <td class="table-btn text-end">
+                      <div class="cell-content justify-content-center">
+                          <a href="/projects/{{project._id}}" class="">
+                            <button class="btn view-more-btn">View More</button>
+                          </a>
+                      </div>
+                    </td>
+                  </tr>
+                {{/each}}
+            </tbody>
+          </table>
+        </div>
       </section>
   </section>
   <section id="upcoming-tasks"> 

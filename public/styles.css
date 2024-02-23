@@ -134,7 +134,7 @@
 
 #task-card{
     margin-right: 3%;
-    height: 65% !important;
+    height: 70% !important;
     overflow: scroll;
 }
 
@@ -169,8 +169,8 @@
     color: var(--text-green);
 }
 
-.table{
-    height: 65% !important;
+.table-container{
+    height: 70% !important;
     overflow: scroll;
 }
 
@@ -217,6 +217,10 @@
 
 .bx-dots-vertical-rounded{
     font-size: 1.5rem;
+}
+
+.project-nav-link{
+    font-size: 1rem !important;
 }
 /* .col-xl-2{
     width: 12% !important;
