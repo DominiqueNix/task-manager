@@ -72,3 +72,12 @@ for(let i = 0; i < taskDeletebtns.length; i++){
     currDeleteBtn.addEventListener('click', () => {handleTaskDelete(currId)})
 }
 
+//update a task
+
+let updateTaskBtn = document.getElementsByClassName('update-task')
+
+updateTaskBtn.forEach(btn => {
+    //add an event listener
+    //call the /projects/projectId/tasks/taskId route to get task info
+    //populate modal content based on the data retrieved from the route
+})
