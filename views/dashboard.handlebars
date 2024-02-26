@@ -3,6 +3,7 @@
   <h4 class="display-8 text-secondary align-self-start" id="sub-title"></h4>
   <section id="top-section" class="d-flex flex-row align-items-around justify-content-between">
     <section id="task-stats" class="w-25">
+      {{#if user.tasks}}
         <h3 class="text-start">Task Stats</h3>
         <div class="card" id="task-card" data-value="{{json user.tasks}}"> 
           <div class="card-body d-flex flex-column justify-content-between align-items-center ">
@@ -24,8 +25,13 @@
               </section>
           </div>
         </div>
+        {{else}}
+          <h3>No tasks</h3>
+        {{/if}}
+
       </section>
       <section id="project-stats" class="w-75">
+        {{#if user.projects}}
         <h3 class="text-start">Project Stats</h3>
         <div class="table-container border bs-border-color-translucent">
           <table class="table ">
@@ -61,6 +67,9 @@
             </tbody>
           </table>
         </div>
+        {{else}}
+          <h3>No projects</h3>
+        {{/if}}
       </section>
   </section>
   <section id="upcoming-tasks"> 

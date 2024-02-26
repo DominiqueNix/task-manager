@@ -1,4 +1,8 @@
-let taskData = document.getElementById('task-card').getAttribute('data-value');
+
+let taskCard = document.getElementById('task-card')
+
+if(taskCard) {
+let taskData = taskCard.getAttribute('data-value');
 let tasks = JSON.parse(taskData);
 let totalTasks = tasks.length;
 let totalInProgressTasks = 0;
@@ -20,9 +24,12 @@ document.getElementById("not-started").textContent = totalNotStartedTasks
 document.getElementById("in-progress").textContent = totalInProgressTasks
 document.getElementById("complete").textContent = totalCompleteTasks
 document.getElementById("sub-title").textContent = new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})
+}
 
 //grab all the task divs
 let taskCheckbox =  document.getElementById('task-assignees');
+
+if(taskCheckbox){
 let projectData = taskCheckbox.getAttribute('data-value');
 let projects = JSON.parse(projectData);
 
@@ -38,7 +45,9 @@ projects.forEach(p => {
     })
     tableProject.setAttribute('style', `width: ${(compT/totalT || 0)*100}%`)
 })
+}
 
+if(taskCard){
 //sort tasks by upcoming: soonest tasks duw within the next two weeks
 for(let i = 0; i < tasks.length-1; i++){
 
@@ -51,6 +60,7 @@ for(let i = 0; i < tasks.length-1; i++){
         tasks[i] = tasks[i+1]
         tasks[i+1] = temp
     }   
+}
 }
 
 
