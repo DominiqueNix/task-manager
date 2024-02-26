@@ -145,7 +145,6 @@
           <div class="form-group mb-4">
             <label for="update-task-project">Project</label>
               <select id="update-task-project" class="form-control">
-                {{!-- <option value="" selected disabled>Please choose project...</option> --}}
                 {{#each user.projects as |project|}}
                   <option class="project-with-update-task"value="{{project._id}}" >{{project.title}}</option>             
                 {{/each}}
@@ -167,7 +166,6 @@
               <input id="update-due-date" class="form-control" 
                     type="text" readonly /> 
               <span class="input-group-addon"> 
-                  {{!-- <i class='bx bx-calendar' ></i> --}}
               </span> 
             </div> 
           </div> 
@@ -183,9 +181,9 @@
            <div class="form-group mb-4">
               <label for="update-task-status">Status</label>
               <select id="update-task-status" class="form-control">
-                <option class="update-task-statuses">Not started</option >
-                <option class="update-task-statuses">In progress</option>
-                <option class="update-task-statuses">Complete</option>
+                <option>Not started</option >
+                <option>In progress</option>
+                <option>Complete</option>
               </select>
            </div>
            <div class="mb-4" id="update-task-assignees" data-value="{{json user.projects}}">

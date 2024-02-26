@@ -20,7 +20,6 @@ projectSelectForm.addEventListener('change', () => {
 
     if(document.getElementsByClassName('assignee-form-list')){
         let all = document.getElementsByClassName('assignee-form-list')
-        console.log("The length of the div is: "+ all.length)
         for(let i= 0; i < all.length; i++){
             all[i].remove()
             if(all[all.length-1]){
