@@ -85,7 +85,6 @@ const updateTaskProjects = JSON.parse(updateTaskProjectData.getAttribute('data-v
 let selectedTask;
 
 let updateTaskBtns = document.getElementsByClassName('update-task')
-console.log(updateTaskBtns)
 
 for(let i = 0; i < updateTaskBtns.length; i++){
     let btn = updateTaskBtns[i]
@@ -137,18 +136,14 @@ for(let i = 0; i < updateTaskBtns.length; i++){
             }
         }
 
-        // let updateDate = document.getElementById('datepicker2')
+        //setting defulat date 
+        let updateDate = document.getElementById('datepicker2')
+        let updateTaskDefaultDate = new Date(selectedTask.dueDate).toLocaleDateString('en-US')
+        updateDate.setAttribute('data-date', updateTaskDefaultDate)
 
-        // new Datepicker(updateDate, {
-        //     autoclose: true,  
-        //     todayHighlight: true, 
-        //     todayBtn : "linked" 
-        // })
-        // .value.trim()
-        // let status = document.getElementById('update-task-status').value.trim()
-        // let dueDate = document.getElementById('update-due-date').value
-        // let assignees = []
-        // document.querySelectorAll(".task-checkbox:checked").forEach(node => assignees.push(node.value))
+       //setting default assignees
+
+
     })
 }
 
