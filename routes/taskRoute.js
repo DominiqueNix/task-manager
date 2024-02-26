@@ -49,45 +49,32 @@ router.post('/:projectId/tasks', projectAuth ,async (req, res) => {
 router.put('/:projectId/tasks/:taskId', projectAuth, async (req, res) => {
 
     try{
-        
-      //find task, then add the current assignees to the req.body so they aren't lost upon update
-    // let task = await Task.findById(req.params.taskId);
+        let task = await Task.findById(req.params.taskId);
+        // updates assingee task list 
+        if(req.body.assignees){
+            // pull task out of all current assignees task list
+            for(let i = 0; i < task.assignees.length; i++){
+                await User.findByIdAndUpdate(
+                    task.assignees[i]._id, 
+                    {$pull: {tasks: task._id}}
+                )
+            }
 
-    // if(req.body.assignees){
-    //     task.assignees.forEach(user => req.body.assignees.push(user))
-    // }
-    // let task = await Task.findById(req.params.taskId)
-
-    // let newAssignees = req.body.assignees.filter(userId => !task.assignees.includes(userId))
-    
-    // newAssignees.forEach(user => {req.body.assignees.push(user)})
-
-    //check if a req.body.assignees exists 
-        //if so then for each assigne => find user e, add the task id to thier task list if the task id doenst already exists 
-    if(req.body.assignees){
-        for(let i = 0; i < req.body.assignees.length; i++){
-            let userId = req.body.assignees[i]
-            // let user = await User.findOne({_id: userId})
-            // let userTasks = user.tasks;
-
-            // if(!userTasks.includes(req.params.taskId)) {
-            //     userTasks.push(req.params.taskId)
-            // }
-            // console.log(user.tasks)
-
-            await User.findByIdAndUpdate(
-                userId, 
-                {$addToSet: {tasks: req.params.taskId}}
-            )
+            // add task to users who are selected
+            for(let i = 0; i < req.body.assignees.length; i++){
+                await User.findByIdAndUpdate(
+                    task.assignees[i]._id, 
+                    {$addToSet: {tasks: task._id}}
+                )
+            }   
         }
-        
-    }
 
-    await Task.findByIdAndUpdate(
-        req.params.taskId, 
-        {$set: req.body}
-    )  
-    res.status(200).send("task updated")
+        //updates the task
+        await Task.findByIdAndUpdate(
+            req.params.taskId, 
+            {$set: req.body}
+        )  
+        res.status(200).send("task updated")
     }catch(err){
         console.log(err)
     }
@@ -99,13 +86,20 @@ router.put('/:projectId/tasks/:taskId', projectAuth, async (req, res) => {
 router.delete('/:projectId/tasks/:taskId', projectAuth, async (req, res) => {
     try{
     //delete task
-      await Task.findByIdAndDelete(req.params.taskId); 
+    await Task.findByIdAndDelete(req.params.taskId); 
 
     //delete task from project
     await Project.findByIdAndUpdate(
         req.params.projectId, 
         {$pull: {tasks: req.params.taskId}}
     )
+
+    //detele task forn users tasklist 
+    await User.findOneAndUpdate(
+        {email: req.oidc.user.email}, 
+        {$pull: {tasks: req.params.taskId}}
+        )
+
       res.send('task deleted') 
     }catch(err){
         console.log(err)

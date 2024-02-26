@@ -78,6 +78,27 @@ router.put('/:projectId', [projectAuth, projectAdmin] ,async(req, res) => {
 
         //updating a project 
         const {title, description, collaborators, onlyOwnerEdit} = req.body;
+
+        let allCollabs = [...collaborators, req.project.owner];
+
+        // get not updated project
+        let notupdated = await Project.findById(req.project._id)
+
+        //iteratre over current users and update the user to pull the project id from each
+        for(let i = 0; i < notupdated.collaborators.length; i++){
+            await User.findByIdAndUpdate(
+                notupdated.collaborators[i]._id, 
+                {$pull: {projects: notupdated._id}}
+            )
+        }
+
+        //iterate over req.body.collborators and add project to each person's project list (plus ower)
+        for(let i = 0; i < allCollabs.length; i++){
+            await User.findByIdAndUpdate(
+                allCollabs[i], 
+                {$addToSet: {projects: notupdated._id}}
+            )
+        }
  
        await Project.findByIdAndUpdate(
             {_id: req.project._id},
@@ -85,19 +106,14 @@ router.put('/:projectId', [projectAuth, projectAdmin] ,async(req, res) => {
                 title: title, 
                 description: description,
                 onlyOwnerEdit: onlyOwnerEdit, 
-                collaborators: [...collaborators, req.project.owner]
+                collaborators: allCollabs
             }
             }
         )
           
-        //Checks if a user is deleted as a collborator, if so, they are also deleted from any task they might have been assigned
-        //If no assignees exists on that task, the owner is automatically added instead 
-        // or I could create update task on the project view as well
         if(req.body.collaborators) {
-
-
+            //updates tasks if a user was deleted from project
             let updatedProject = await Project.findById(req.project._id);
-
             let authUsers = []
             updatedProject.collaborators.forEach(u => authUsers.push(u._id));
 
@@ -109,8 +125,15 @@ router.put('/:projectId', [projectAuth, projectAdmin] ,async(req, res) => {
                     let newAssignees = []
 
                     if(eachtask.assignees){
-                        
-                        eachtask.assignees.forEach(u => assignees.push(u));
+
+                        for(let  i = 0; i < eachtask.assignees.length; i++){
+                           assignees.push(eachtask.assignees[i])
+
+                           await User.findByIdAndUpdate(
+                                eachtask.assignees[i], 
+                                {$pull: {tasks: eachtask._id}}
+                           )
+                        }
 
                         assignees.forEach(a => {
                             authUsers.forEach(authU => {
@@ -123,6 +146,15 @@ router.put('/:projectId', [projectAuth, projectAdmin] ,async(req, res) => {
                             task._id, 
                             {$set: {assignees: newAssignees}}
                         )
+
+                        for(let  i = 0; i < newAssignees.length; i++){
+                            assignees.push(newAssignees[i])
+ 
+                            await User.findByIdAndUpdate(
+                                 newAssignees[i], 
+                                 {$pull: {tasks: eachtask._id}}
+                            )
+                         }
 
                     }             
             }
@@ -138,15 +170,34 @@ router.put('/:projectId', [projectAuth, projectAdmin] ,async(req, res) => {
 //delete a project and all associated tasks
 router.delete('/:projectId', [projectAuth, projectAdmin] ,async (req, res) => {
     try{
-        //delete all tasks for a project
+        //delete all tasks for a project and delete tasks form a user's tasklist
         if(req.project.tasks) {
            for(let i = 0; i < req.project.tasks.length; i++) {
+                //delete all project's tasks from each collaborators task list
+                for(let j=0; j < req.project.collaborators.length; j++){
+                    let collab = req.project.collaborators[j];
+                    await User.findByIdAndUpdate(
+                        collab._id, 
+                        {$pull: {tasks:req.project.tasks[i]._id}}
+                    )
+                }
+
                 await Task.findByIdAndDelete(req.project.tasks[i]._id)
             } 
         }
 
+        //delete projectid from all collaborators project list
+        for(let i=0; i < req.project.collaborators.length; i++){
+            let collab = req.project.collaborators[i];
+            await User.findByIdAndUpdate(
+                collab._id, 
+                {$pull: {projects: req.project._id}}
+            )
+        }
+
         //delete project
         await Project.findByIdAndDelete(req.project._id);
+
         res.send("project deleted")
     }catch(err){
         console.log(err)
