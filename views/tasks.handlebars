@@ -22,7 +22,7 @@
                         <div class="btn-group">
                             <button type="button" class="btn btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='bx bx-dots-vertical-rounded'></i></button>
                             <div class="dropdown-menu">
-                                <button data-id="{{task._id}}" class="update-task dropdown-item" data-toggle="modal" data-target="#update-task-modal"><i class='bx bx-edit-alt mx-1'></i>Update task</button>
+                                <button data-value="{{json task}}" data-id="{{task._id}}" class="update-task dropdown-item" data-toggle="modal" data-target="#update-task-modal"><i class='bx bx-edit-alt mx-1'></i>Update task</button>
                                 <div class="dropdown-divider"></div>
                                 <button data-id="{{task._id}}" class="delete-task dropdown-item"><i class='bx bx-trash mx-1 text-danger' ></i>Delete task</button>
                             </div>    
@@ -62,7 +62,7 @@
                          <div class="btn-group">
                             <button type="button" class="btn btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='bx bx-dots-vertical-rounded'></i></button>
                             <div class="dropdown-menu">
-                                <button data-id="{{task._id}}" class="update-task dropdown-item" data-toggle="modal" data-target="#update-task-modal"><i class='bx bx-edit-alt mx-1'></i>Update task</button>
+                                <button data-id="{{task._id}}" class="update-task dropdown-item" data-toggle="modal" data-target="#update-task-modal"  data-value="{{json task}}"><i class='bx bx-edit-alt mx-1'></i>Update task</button>
                                 <div class="dropdown-divider"></div>
                                 <button data-id="{{task._id}}" class="delete-task dropdown-item"><i class='bx bx-trash mx-1 text-danger' ></i>Delete task</button>
                             </div>    
@@ -103,7 +103,7 @@
                          <div class="btn-group">
                             <button type="button" class="btn btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='bx bx-dots-vertical-rounded'></i></button>
                             <div class="dropdown-menu">
-                                <button data-id="{{task._id}}" class="update-task dropdown-item" data-toggle="modal" data-target="#update-task-modal"><i class='bx bx-edit-alt mx-1'></i>Update task</button>
+                                <button data-id="{{task._id}}" class="update-task dropdown-item" data-toggle="modal" data-target="#update-task-modal"  data-value="{{json task}}"><i class='bx bx-edit-alt mx-1'></i>Update task</button>
                                 <div class="dropdown-divider"></div>
                                 <button data-id="{{task._id}}" class="delete-task dropdown-item"><i class='bx bx-trash mx-1 text-danger' ></i>Delete task</button>
                             </div>    
@@ -135,7 +135,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content ">
       <div class="modal-header">
-        <h5 class="modal-title" id="update-task-title">Update task</h5>
+        <h5 class="modal-title" id="update-task-modal-title">Update task</h5>
         <button type="button" class="close btn" data-dismiss="modal" aria-label="Close">
           <span class="h3" aria-hidden="true">&times;</span>
         </button>
@@ -145,36 +145,34 @@
           <div class="form-group mb-4">
             <label for="update-task-project">Project</label>
               <select id="update-task-project" class="form-control">
-                <option value="" selected disabled>Please choose project...</option>
                 {{#each user.projects as |project|}}
-                  <option value="{{project._id}}" >{{project.title}}</option>             
+                  <option class="project-with-update-task"value="{{project._id}}" >{{project.title}}</option>             
                 {{/each}}
             </select>
            </div>
           <div class="form-group mb-4">
             <label for="update-task-title">Title</label>
-            <input type="text" class="form-control" id="update-task-title" placeholder="Enter task title">
+            <input type="text" class="form-control" id="update-task-title">
           </div>
           <div class="form-group mb-4">
             <label for="update-task-description">Description</label>
-            <input type="text" class="form-control" id="update-task-description" placeholder="Enter task description">
+            <input type="text" class="form-control" id="update-task-description">
           </div>
           <div class="container w-100 p-0 mb-4"> 
             <label>Due Date </label> 
-            <div id="datepicker" 
+            <div id="datepicker2" 
               class="input-group date w-100" 
-              data-date-format="mm-dd-yyyy"> 
+              data-date-format="mm-dd-yyyy" > 
               <input id="update-due-date" class="form-control" 
                     type="text" readonly /> 
               <span class="input-group-addon"> 
-                  {{!-- <i class='bx bx-calendar' ></i> --}}
               </span> 
             </div> 
           </div> 
           <div class="form-group mb-4">
             <label for="update-task-priority">Priority</label>
               <select id="update-task-priority" class="form-control">
-                <option>Critical</option>
+                <option class="">Critical</option>
                 <option>High</option>
                 <option>Medium</option>
                 <option>Minor</option>
@@ -183,7 +181,7 @@
            <div class="form-group mb-4">
               <label for="update-task-status">Status</label>
               <select id="update-task-status" class="form-control">
-                <option>Not started</option>
+                <option>Not started</option >
                 <option>In progress</option>
                 <option>Complete</option>
               </select>

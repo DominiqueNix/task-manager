@@ -3,50 +3,32 @@ let taskCheckboxMain =  document.getElementById('task-assignees');
 let projectDataMail = taskCheckboxMain.getAttribute('data-value');
 let projectsMain = JSON.parse(projectDataMail);
 
-// let selectedProject;
-
-// const changeProjectId = (id) => {
-//     projectSelectForm.setAttribute('value', id)
-//     console.log(projectSelectForm.value)
-//     if(projectsMain.length) {
-//         projectsMain.forEach(p => {
-//         //updating the project the user has selected
-//         if(p._id == projectSelectForm.value){
-//             selectedProject = p
-//         }
-//     })
-//     }
-// }
 
 if(projectsMain.length){ 
-//for the selected project
 let projectSelectForm = document.getElementById('task-project')
-
-//project not updatating maye so an onlick form this with the 
-//function in the html like done with the autocomplete stuff
-
-
-
 
 let selectedProject;
 
-projectSelectForm.addEventListener('click', () => {
+projectSelectForm.addEventListener('change', () => {
     projectsMain.forEach(p => {
     //updating the project the user has selected
     if(p._id == projectSelectForm.value){
         selectedProject = p
     }
+    
 })
 
     if(document.getElementsByClassName('assignee-form-list')){
-        let one = document.getElementsByClassName('assignee-form-list')
-        console.log("The length of the div is: "+one.length)
-        for(let i = 0; i < one.length; i++){
-            one[i].remove()
-            one[one.length-1].remove()
+        let all = document.getElementsByClassName('assignee-form-list')
+        for(let i= 0; i < all.length; i++){
+            all[i].remove()
+            if(all[all.length-1]){
+            all[all.length-1].remove()
+            }
         }
     }
 
+    if(selectedProject){
         selectedProject.collaborators.forEach(col => {
             let formDiv = document.createElement('div');
             formDiv.classList.add("form-check", "assignee-form-list")
@@ -62,9 +44,9 @@ projectSelectForm.addEventListener('click', () => {
             label.textContent = col.email
             formDiv.appendChild(input)
             formDiv.appendChild(label)
-            
             taskCheckboxMain.appendChild(formDiv)
         })
+    }
 })
 
 
