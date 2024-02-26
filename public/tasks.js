@@ -46,6 +46,21 @@ completedTaskprogressbarText.textContent = `${Math.round((comp/total || 0)*100)}
 let projectData = document.getElementById("tasks-container").getAttribute('data-value')
 let projects = JSON.parse(projectData);
 
+//setting project name in task card
+let taskProjectTitles = document.getElementsByClassName('task-project-title');
+
+for(let i = 0; i < taskProjectTitles.length; i++){
+    let t = taskProjectTitles[i]
+    
+    projects.forEach(p => {
+       p.tasks.forEach(t2 => {
+        if(t2 == t.getAttribute('data-id')){
+            t.textContent = p.title
+        }
+       })
+    })
+}
+
 const handleTaskDelete = async(taskId) => {
 let projectId;
 projects.forEach(p => {
@@ -110,13 +125,10 @@ for(let i = 0; i < updateTaskBtns.length; i++){
         })
 
         // setting default project
-        let projectDefalutforTask = document.getElementsByClassName('project-with-update-task')
+        let projectDefalutforTask = document.getElementById('project-with-update-task')
 
-        for(let i = 0; i < projectDefalutforTask.length; i++){
-            if(projectDefalutforTask[i].value == projcetAssociatedWithTask._id){
-                projectDefalutforTask[i].selected = true;
-            }
-        }
+        projectDefalutforTask.textContent = projcetAssociatedWithTask.title;
+        projectDefalutforTask.setAttribute('value', projcetAssociatedWithTask._id)
 
         //setting defalut status
         let status = document.getElementById('update-task-status')
@@ -141,11 +153,80 @@ for(let i = 0; i < updateTaskBtns.length; i++){
         let updateTaskDefaultDate = new Date(selectedTask.dueDate).toLocaleDateString('en-US')
         updateDate.setAttribute('data-date', updateTaskDefaultDate)
 
+        
        //setting default assignees
 
+       let updateTaskAssignees = document.getElementById('update-task-assignees')
+        
+        if(document.getElementsByClassName('udpate-assignee-form-list')){
+            let all = document.getElementsByClassName('update-assignee-form-list')
+            for(let i= 0; i < all.length; i++){
+                all[i].remove()
+                if(all[all.length-1]){
+                all[all.length-1].remove()
+                }
+            }
+        }
+
+        if(projcetAssociatedWithTask){
+            projcetAssociatedWithTask.collaborators.forEach(col => {
+                let formDiv = document.createElement('div');
+                formDiv.classList.add("form-check", "update-assignee-form-list")
+                let input = document.createElement('input');
+                input.setAttribute('type', 'checkbox')
+                input.setAttribute('value', col._id)
+                input.setAttribute('id', col._id)
+                input.classList.add('form-check-input')
+                input.classList.add('task-checkbox')
+                selectedTask.assignees.forEach(u => {
+                    if(u._id === col._id){
+                        input.checked = true
+                    }
+                })
+                let label = document.createElement('label')
+                label.setAttribute('for', col._id)
+                label.classList.add('form-check-label')
+                label.textContent = col.email
+                formDiv.appendChild(input)
+                formDiv.appendChild(label)
+                updateTaskAssignees.appendChild(formDiv)
+            })
+        }
 
     })
 }
 
 
+let updateTaskSubmitBtn = document.getElementById('update-task-submit')
 
+updateTaskSubmitBtn.addEventListener('click', async () => {
+    let projectId = document.getElementById('update-task-project').value
+    let title = document.getElementById('update-task-title').value
+    let description = document.getElementById('update-task-description').value
+    let priority = document.getElementById('update-task-priority').value
+    let status = document.getElementById('update-task-status').value
+    let dueDate = document.getElementById('datepicker2').value
+    let assignees = [];
+    document.querySelectorAll(".task-checkbox:checked").forEach(node => assignees.push(node.value))
+
+    if(projectId && title) {
+        const res = await fetch(`/projects/${projectId}/tasks/${selectedTask._id}`, {
+            method:'PUT', 
+            body: JSON.stringify({title, description ,priority, status, dueDate, assignees}), 
+            headers: {'Content-Type': 'application/json'}
+        })
+
+        if(res.ok) {
+            location.reload()
+        } else {
+            alert(res.statusText)
+        }
+    }
+   
+
+})
+
+
+//figuer out bug when adding a task on the tack page 
+//weiredness with assingges being added
+//ex. adding only self to a project that has multiple collaborators

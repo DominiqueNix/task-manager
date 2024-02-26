@@ -28,6 +28,7 @@
                             </div>    
                         </div>
                     </div>
+                    <p class="text-muted task-project-title" data-id="{{task._id}}"></p>
                     <h3  >{{task.title}}</h3>
                     <p class="text-muted">{{task.description}}</p>
                     
@@ -67,6 +68,7 @@
                             </div>    
                         </div>
                     </div>
+                    <p class="text-muted task-project-title" data-id="{{task._id}}"></p>
                     <h3>{{task.title}}</h3>
                     <p class="text-muted">{{task.description}}</p>
                     
@@ -108,6 +110,7 @@
                             </div>    
                         </div>
                     </div>
+                    <p class="text-muted task-project-title" data-id="{{task._id}}"></p>
                     <h3>{{task.title}}</h3>
                     <p class="text-muted">{{task.description}}</p>
                     <div class="task-box-footer">
@@ -129,14 +132,14 @@
         {{/each}}
     </div>
 </div>
-{{!-- Add task modal --}}
+{{!-- Update task modal --}}
  <div class="modal fade" id="update-task-modal" tabindex="-1" role="dialog" aria-labelledby="update-task-modal" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content ">
       <div class="modal-header">
         <h5 class="modal-title" id="update-task-modal-title">Update task</h5>
         <button type="button" class="close btn" data-dismiss="modal" aria-label="Close">
-          <span class="h3" aria-hidden="true">&times;</span>
+          <span class="h3" aria-hidden="true" type="clear">&times;</span>
         </button>
       </div>
       <div class="modal-body">
@@ -144,9 +147,9 @@
           <div class="form-group mb-4">
             <label for="update-task-project">Project</label>
               <select id="update-task-project" class="form-control">
-                {{#each user.projects as |project|}}
-                  <option class="project-with-update-task"value="{{project._id}}" >{{project.title}}</option>             
-                {{/each}}
+                {{!-- {{#each user.projects as |project|}} --}}
+                  <option id="project-with-update-task" ></option>             
+                {{!-- {{/each}} --}}
             </select>
            </div>
           <div class="form-group mb-4">
@@ -192,7 +195,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="clear" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>

@@ -55,7 +55,7 @@ router.put('/:projectId/tasks/:taskId', projectAuth, async (req, res) => {
             // pull task out of all current assignees task list
             for(let i = 0; i < task.assignees.length; i++){
                 await User.findByIdAndUpdate(
-                    task.assignees[i]._id, 
+                    task.assignees[i], 
                     {$pull: {tasks: task._id}}
                 )
             }
@@ -63,7 +63,7 @@ router.put('/:projectId/tasks/:taskId', projectAuth, async (req, res) => {
             // add task to users who are selected
             for(let i = 0; i < req.body.assignees.length; i++){
                 await User.findByIdAndUpdate(
-                    task.assignees[i]._id, 
+                    task.assignees[i], 
                     {$addToSet: {tasks: task._id}}
                 )
             }   
