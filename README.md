@@ -4,11 +4,11 @@
 This is a full stack task management website built with security features using auth0, node.js, express, mongodb, mongoose, and handlebars.
 
 ### Table of Contents
-- [Api Documentation](api-documentation)
-- [Deployed Website](https://harmonius.onrender.com/)
+- [Api Documentation](#api-documentation)
+- [Deployed Website](#deployed-website)
 - [User Story](#user-story)
 - [Installation](#installation)
-- [Website Screenshots]()
+- [Website Screenshots](#website-screenshots)
 - [Development](#development)
 - [Technology User](#technology-used)
 - [Acknowledgements](#acknowledgements)
