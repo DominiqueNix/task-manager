@@ -88,10 +88,6 @@ for(let i = 0; i < taskDeletebtns.length; i++){
 }
 
 //update a task
-
-//instead of passing id, pass project data, then just reuse code from dashbaord to get selected proejct and assgnees 
-//for select values, just add selected = true for the corrent drop down defalut
-//past through task data => then set then values for all component
 const updateTaskProjectData = document.getElementById('update-task-assignees');
 
 const updateTaskProjects = JSON.parse(updateTaskProjectData.getAttribute('data-value'))
@@ -108,7 +104,6 @@ for(let i = 0; i < updateTaskBtns.length; i++){
         selectedTask = JSON.parse(btn.getAttribute('data-value'))
         let projcetAssociatedWithTask;
         //set defalut value fo form to selected task data
-        // let updateTaskProjectId = selectedProject._id
         let updateTaskTitle = document.getElementById
         ('update-task-title')
         let updateTaskDescription = document.getElementById('update-task-description')
@@ -155,7 +150,6 @@ for(let i = 0; i < updateTaskBtns.length; i++){
 
         
        //setting default assignees
-
        let updateTaskAssignees = document.getElementById('update-task-assignees')
         
         if(document.getElementsByClassName('udpate-assignee-form-list')){

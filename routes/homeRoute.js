@@ -29,7 +29,14 @@ router.get('/', async (req, res) => {
                 path: "tasks", 
                 model: "Task", 
             }
-        }).populate("tasks").lean();
+        }).populate({
+            path: "tasks", 
+            populate: {
+                path:"assignees",
+                select: "email", 
+                model: "User"
+            }
+        }).lean();
         if(!user) {
             user = await User.create({email: email})
         } 

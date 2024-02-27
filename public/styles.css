@@ -36,7 +36,6 @@
     background-color: lightgray;
 }
 .day {
-    /* background-color: lightgray !important; */
     border: lightgray 1px solid;
     padding: 2px !important;
     text-align: center;
@@ -126,7 +125,6 @@
 #top-section{
     width: 95%;
     margin-top: 3%;
-    height: 50vh;
     margin-left: 2%;
 }
 
@@ -161,6 +159,7 @@
     margin-right: 3%;
     height: 70% !important;
     overflow: scroll;
+    height: max-content !important;
 }
 
 .task-stats {
@@ -169,6 +168,11 @@
     flex-direction: row;
     
 }
+
+#project-stats{
+    height: max-content !important;
+}
+
 .dash-bx{
     padding: 8px;
     border-radius: 50px; 
@@ -236,10 +240,6 @@
     overflow:scroll
 }
 
-.boxes-3{
-    /* height: 30%; */
-}
-
 .bx-dots-vertical-rounded{
     font-size: 1.5rem;
 }
@@ -247,9 +247,7 @@
 .project-nav-link{
     font-size: 1rem !important;
 }
-/* .col-xl-2{
-    width: 12% !important;
+
+#upcoming-tasks{
+    margin: 2%;
 }
-/* .task-tot{ */
-    /* margin-right: 10%;
-} */

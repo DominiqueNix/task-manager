@@ -28,7 +28,6 @@
         {{else}}
           <h3>No tasks</h3>
         {{/if}}
-
       </section>
       <section id="project-stats" class="w-75">
         {{#if user.projects}}
@@ -73,11 +72,26 @@
       </section>
   </section>
   <section id="upcoming-tasks"> 
+    <div class="m-2 d-flex display-content-center flex-column">
+    <h3 class="text-start">Upcoming Tasks</h3>
+        <table class="table border bs-border-color-translucent">
+          <thead>
+            <tr class="table-active">
+              <th class="top-row title-row"scope="col">Name</th>
+              <th class="top-row description-row"scope="col">Description</th>
+              <th class="top-row"scope="col">Due Date</th>
+              <th class="top-row text-center"scope="col">Status</th>
+              <th class="top-row text-center"scope="col">Priority</th>
+              <th class="top-row"scope="col">Assignees</th>      
+            </tr>
+          </thead>
+          <tbody id="dash-task-table">
+          </tbody>
+        </table>
+</div>
   </section>
 </div>
 </div>
 <script src="/dashboard.js"></script>
-{{!-- add javascript code that will add the correct numbers to the text content of each div  --}}
-{{!-- ?fetch user data in js and then creat teh numbers I need for each div  --}}
 
 

@@ -1,9 +1,10 @@
 
 let taskCard = document.getElementById('task-card')
+let tasks;
 
 if(taskCard) {
 let taskData = taskCard.getAttribute('data-value');
-let tasks = JSON.parse(taskData);
+tasks = JSON.parse(taskData);
 let totalTasks = tasks.length;
 let totalInProgressTasks = 0;
 let totalCompleteTasks = 0;
@@ -47,24 +48,81 @@ projects.forEach(p => {
 })
 }
 
+let upcomingTasks = [];
+
 if(taskCard){
-//sort tasks by upcoming: soonest tasks duw within the next two weeks
-for(let i = 0; i < tasks.length-1; i++){
-
-    let currTask = new Date(tasks[i].dueDate).getTime()
-    let nextTask = new Date(tasks[i+1].dueDate).getTime()
-    let twoWeeksAway = new Date()
-    twoWeeksAway.setDate(twoWeeksAway.getDate() +14)
-    if(nextTask > currTask && nextTask < twoWeeksAway.getTime()){
-        let temp = tasks[i]
-        tasks[i] = tasks[i+1]
-        tasks[i+1] = temp
-    }   
+ upcomingTasks = tasks.sort((d1, d2) => (new Date(d1.dueDate).getTime() > new Date(d2.dueDate).getTime()) ? 1 : (new Date(d1.dueDate).getTime() < new Date(d2.dueDate).getTime()) ? -1 : 0).splice(0, 5)
 }
+console.log(upcomingTasks)
+let tBody = document.getElementById("dash-task-table")
+
+upcomingTasks.forEach(t => {
+    let tr = document.createElement('tr')
+    tr.classList.add("m-2")
+    let title = document.createElement('td')
+    title.innerHTML = `<div class="cell-content">${t.title}</div>`
+    title.classList.add("title-row")
+
+    let description = document.createElement('td')
+    description.innerHTML = `<div class="cell-content description">${t.description}</div>`
+    description.classList.add("desciption-row")
+
+    let dueDate = document.createElement('td')
+    dueDate.innerHTML = `<div class="cell-content">${new Date(t.dueDate).toLocaleDateString('en-us', { year:"numeric", month:"short", day:"numeric"})}</div>`
+    
+    let status =document.createElement('td')
+    status.innerHTML= `<div class="cell-content status justify-content-center">${t.status}</div>`
+    
+    let priority = document.createElement('td')
+    priority.innerHTML= `<div class="cell-content  priority justify-content-center">${t.priority}</div>`
+
+    let assignees = document.createElement('td')
+    let assigneesDiv = document.createElement('div')
+    assigneesDiv.classList.add("cell-content")
+
+    
+    t.assignees.forEach(a => {
+        let aDiv = document.createElement('div')
+        aDiv.classList.add("m-1")
+        aDiv.innerHTML = `<button type="button" class="btn btn-secondary rounded-circle" data-toggle="tooltip" data-placement="top" title=${a.email}>${a.email.charAt(0).toUpperCase()}</button>`
+        assigneesDiv.appendChild(aDiv)
+    })
+
+    assignees.appendChild(assigneesDiv)
+
+    tr.appendChild(title);
+    tr.appendChild(description);
+    tr.appendChild(dueDate);
+    tr.appendChild(status);
+    tr.appendChild(priority);
+    tr.appendChild(assignees)
+    tBody.appendChild(tr)
+})
+
+let priority = document.getElementsByClassName('priority')
+let statuss = document.getElementsByClassName('status')
+
+for(let i = 0; i < priority.length; i++){
+    let p = priority[i].textContent
+    if(p === "Critical"){
+        priority[i].classList.add('red')
+    } else if(p === "High"){
+        priority[i].classList.add('orange')
+    } else if(p === "Medium"){
+        priority[i].classList.add('blue')
+    }else if(p === "Minor"){
+        priority[i].classList.add('green')
+    }
 }
 
-
-
-//grab btn for pojects and redirect to a single project view 
-//updating progress bar in project table
+for(let i = 0; i < statuss.length; i++){
+    let s= statuss[i].textContent
+    if(s === "Complete"){
+        statuss[i].classList.add('green')
+    } else if(s === "Not started"){
+        statuss[i].classList.add('orange')
+    } else if(s === "In progress"){
+        statuss[i].classList.add('blue')
+    }
+}
 
