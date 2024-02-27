@@ -4,136 +4,153 @@
 <div id="progress-section" class="my-5 w-75 mx-2" data-value="{{json user.tasks}}">
   <h3>Progress</h3>
   <p id="task-c-text"></p>
-    <div class="progress mb-2">
-      <div id="task-complete" class="progress-bar progress-bar-striped bg-success" role="progressbar"></div>
-    </div> 
+  <div class="progress mb-2">
+    <div id="task-complete" class="progress-bar progress-bar-striped bg-success" role="progressbar"></div>
+  </div>
 </div>
-<div id="tasks-container" class="w-full h-75 m-2 border bs-border-color-translucent rounded d-flex flex-row" data-value="{{json user.projects}}">
-    <div class="task-boxes my-2 mx-5 border bs-border-color-translucent rounded">
-           <h4 class=" m-2 display-6">Backlog</h4>        
-        {{#each user.tasks as |task|}}
-            {{#stringCompare task.status "Not started"}}
-                <div class="p-2 boxes-3 m-2 border bs-border-color-translucent rounded d-flex flex-column justify-content-between">
-                    <div class="d-flex flex-row justify-content-between align-items-center">
-                        <div>
-                            <span class="task-box-status priority p-1">{{task.status}}</span>
-                            <span class="task-box-priorites status p-1">{{task.priority}}</span>
-                        </div>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='bx bx-dots-vertical-rounded'></i></button>
-                            <div class="dropdown-menu">
-                                <button data-value="{{json task}}" data-id="{{task._id}}" class="update-task dropdown-item" data-toggle="modal" data-target="#update-task-modal"><i class='bx bx-edit-alt mx-1'></i>Update task</button>
-                                <div class="dropdown-divider"></div>
-                                <button data-id="{{task._id}}" class="delete-task dropdown-item"><i class='bx bx-trash mx-1 text-danger' ></i>Delete task</button>
-                            </div>    
-                        </div>
-                    </div>
-                    <p class="text-muted task-project-title" data-id="{{task._id}}"></p>
-                    <h3  >{{task.title}}</h3>
-                    <p class="text-muted">{{task.description}}</p>
-                    
-                    <div class="task-box-footer">
-                     <hr>   
-                        <div class="d-flex flex-row justify-content-between align-items-center">
-                            <div>
-                                {{#each task.assignees as |u|}}
-                                    <button type="button" class="btn btn-secondary rounded-circle" data-toggle="tooltip" data-placement="top" title="{{u.email}}">{{firstInital u}}</button>
-                                {{/each}}   
-                            </div>
-                            <span class="text-muted">{{toStringDate task.dueDate}}</span>  
-                        </div>
-                        
-                    </div>
-                </div>
+<div id="tasks-container" class="w-full h-75 m-2 border bs-border-color-translucent rounded d-flex flex-row"
+  data-value="{{json user.projects}}">
+  <div class="task-boxes my-2 mx-5 border bs-border-color-translucent rounded">
+    <h4 class=" m-2 display-6">Backlog</h4>
+    {{#each user.tasks as |task|}}
+    {{#stringCompare task.status "Not started"}}
+    <div class="p-2 boxes-3 m-2 border bs-border-color-translucent rounded d-flex flex-column justify-content-between">
+      <div class="d-flex flex-row justify-content-between align-items-center">
+        <div>
+          <span class="task-box-status priority p-1">{{task.status}}</span>
+          <span class="task-box-priorites status p-1">{{task.priority}}</span>
+        </div>
+        <div class="btn-group">
+          <button type="button" class="btn btn-light" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false"><i class='bx bx-dots-vertical-rounded'></i></button>
+          <div class="dropdown-menu">
+            <button data-value="{{json task}}" data-id="{{task._id}}" class="update-task dropdown-item"
+              data-toggle="modal" data-target="#update-task-modal"><i class='bx bx-edit-alt mx-1'></i>Update
+              task</button>
+            <div class="dropdown-divider"></div>
+            <button data-id="{{task._id}}" class="delete-task dropdown-item"><i
+                class='bx bx-trash mx-1 text-danger'></i>Delete task</button>
+          </div>
+        </div>
+      </div>
+      <p class="text-muted task-project-title" data-id="{{task._id}}"></p>
+      <h3>{{task.title}}</h3>
+      <p class="text-muted">{{task.description}}</p>
 
-            {{/stringCompare}}
-        {{/each}}
+      <div class="task-box-footer">
+        <hr>
+        <div class="d-flex flex-row justify-content-between align-items-center">
+          <div>
+            {{#each task.assignees as |u|}}
+            <button type="button" class="btn btn-secondary rounded-circle" data-toggle="tooltip" data-placement="top"
+              title="{{u.email}}">{{firstInital u}}</button>
+            {{/each}}
+          </div>
+          <span class="text-muted">{{toStringDate task.dueDate}}</span>
+        </div>
+
+      </div>
     </div>
-    <div class="task-boxes my-2 border bs-border-color-translucent rounded">
-        <h4 class="m-2 display-6">In progress</h4>
-          {{#each user.tasks as |task|}}
-            {{#stringCompare task.status "In progress"}}
-                <div class="p-2 boxes-3 m-2 border bs-border-color-translucent rounded d-flex flex-column justify-content-between">
-                    <div class="d-flex flex-row justify-content-between align-items-center">
-                        <div >
-                            <span class="task-box-status priority p-1">{{task.status}}</span>
-                            <span class="task-box-priorites status p-1">{{task.priority}}</span>
-                        </div>
-                         <div class="btn-group">
-                            <button type="button" class="btn btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='bx bx-dots-vertical-rounded'></i></button>
-                            <div class="dropdown-menu">
-                                <button data-id="{{task._id}}" class="update-task dropdown-item" data-toggle="modal" data-target="#update-task-modal"  data-value="{{json task}}"><i class='bx bx-edit-alt mx-1'></i>Update task</button>
-                                <div class="dropdown-divider"></div>
-                                <button data-id="{{task._id}}" class="delete-task dropdown-item"><i class='bx bx-trash mx-1 text-danger' ></i>Delete task</button>
-                            </div>    
-                        </div>
-                    </div>
-                    <p class="text-muted task-project-title" data-id="{{task._id}}"></p>
-                    <h3>{{task.title}}</h3>
-                    <p class="text-muted">{{task.description}}</p>
-                    
-                    <div class="task-box-footer">
-                     <hr>   
-                        <div class="d-flex flex-row justify-content-between align-items-center">
-                            <div>
-                                {{#each task.assignees as |u|}}
-                                    <button type="button" class="btn btn-secondary rounded-circle" data-toggle="tooltip" data-placement="top" title="{{u.email}}">{{firstInital u}}</button>
-                                {{/each}}  
-                            </div>
-                            
-                            <span class="text-muted">{{toStringDate task.dueDate}}</span>  
-                        </div>
-                        
-                    </div>
-                    
-                </div>
-            {{/stringCompare}}
-            {{!-- {{task.title}} --}}
-        {{/each}}
+
+    {{/stringCompare}}
+    {{/each}}
+  </div>
+  <div class="task-boxes my-2 border bs-border-color-translucent rounded">
+    <h4 class="m-2 display-6">In progress</h4>
+    {{#each user.tasks as |task|}}
+    {{#stringCompare task.status "In progress"}}
+    <div class="p-2 boxes-3 m-2 border bs-border-color-translucent rounded d-flex flex-column justify-content-between">
+      <div class="d-flex flex-row justify-content-between align-items-center">
+        <div>
+          <span class="task-box-status priority p-1">{{task.status}}</span>
+          <span class="task-box-priorites status p-1">{{task.priority}}</span>
+        </div>
+        <div class="btn-group">
+          <button type="button" class="btn btn-light" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false"><i class='bx bx-dots-vertical-rounded'></i></button>
+          <div class="dropdown-menu">
+            <button data-id="{{task._id}}" class="update-task dropdown-item" data-toggle="modal"
+              data-target="#update-task-modal" data-value="{{json task}}"><i class='bx bx-edit-alt mx-1'></i>Update
+              task</button>
+            <div class="dropdown-divider"></div>
+            <button data-id="{{task._id}}" class="delete-task dropdown-item"><i
+                class='bx bx-trash mx-1 text-danger'></i>Delete task</button>
+          </div>
+        </div>
+      </div>
+      <p class="text-muted task-project-title" data-id="{{task._id}}"></p>
+      <h3>{{task.title}}</h3>
+      <p class="text-muted">{{task.description}}</p>
+
+      <div class="task-box-footer">
+        <hr>
+        <div class="d-flex flex-row justify-content-between align-items-center">
+          <div>
+            {{#each task.assignees as |u|}}
+            <button type="button" class="btn btn-secondary rounded-circle" data-toggle="tooltip" data-placement="top"
+              title="{{u.email}}">{{firstInital u}}</button>
+            {{/each}}
+          </div>
+
+          <span class="text-muted">{{toStringDate task.dueDate}}</span>
+        </div>
+
+      </div>
+
     </div>
-    <div class="task-boxes my-2 mx-5 border bs-border-color-translucent rounded">
-        <h4 class="m-2 display-6">Complete</h4>
-          {{#each user.tasks as |task|}}
-            {{#stringCompare task.status "Complete"}}
-                <div class="p-2 boxes-3 m-2 border bs-border-color-translucent rounded d-flex flex-column justify-content-between">
-                    <div class="d-flex flex-row justify-content-between align-items-center">
-                        <div >
-                            <span class="task-box-status priority p-1">{{task.status}}</span>
-                            <span class="task-box-priorites status p-1">{{task.priority}}</span>
-                        </div>
-                         <div class="btn-group">
-                            <button type="button" class="btn btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='bx bx-dots-vertical-rounded'></i></button>
-                            <div class="dropdown-menu">
-                                <button data-id="{{task._id}}" class="update-task dropdown-item" data-toggle="modal" data-target="#update-task-modal"  data-value="{{json task}}"><i class='bx bx-edit-alt mx-1'></i>Update task</button>
-                                <div class="dropdown-divider"></div>
-                                <button data-id="{{task._id}}" class="delete-task dropdown-item"><i class='bx bx-trash mx-1 text-danger' ></i>Delete task</button>
-                            </div>    
-                        </div>
-                    </div>
-                    <p class="text-muted task-project-title" data-id="{{task._id}}"></p>
-                    <h3>{{task.title}}</h3>
-                    <p class="text-muted">{{task.description}}</p>
-                    <div class="task-box-footer">
-                     <hr>   
-                        <div class="d-flex flex-row justify-content-between align-items-center">
-                            <div>
-                                {{#each task.assignees as |u|}}
-                                    <button type="button" class="btn btn-secondary rounded-circle" data-toggle="tooltip" data-placement="top" title="{{u.email}}">{{firstInital u}}</button>
-                                {{/each}}  
-                            </div>
-                              <span class="text-muted">{{toStringDate task.dueDate}}</span>    
-                        </div>
-                        
-                    </div>
-                    
-                </div>
-            {{/stringCompare}}
-            {{!-- {{task.title}} --}}
-        {{/each}}
+    {{/stringCompare}}
+    {{!-- {{task.title}} --}}
+    {{/each}}
+  </div>
+  <div class="task-boxes my-2 mx-5 border bs-border-color-translucent rounded">
+    <h4 class="m-2 display-6">Complete</h4>
+    {{#each user.tasks as |task|}}
+    {{#stringCompare task.status "Complete"}}
+    <div class="p-2 boxes-3 m-2 border bs-border-color-translucent rounded d-flex flex-column justify-content-between">
+      <div class="d-flex flex-row justify-content-between align-items-center">
+        <div>
+          <span class="task-box-status priority p-1">{{task.status}}</span>
+          <span class="task-box-priorites status p-1">{{task.priority}}</span>
+        </div>
+        <div class="btn-group">
+          <button type="button" class="btn btn-light" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false"><i class='bx bx-dots-vertical-rounded'></i></button>
+          <div class="dropdown-menu">
+            <button data-id="{{task._id}}" class="update-task dropdown-item" data-toggle="modal"
+              data-target="#update-task-modal" data-value="{{json task}}"><i class='bx bx-edit-alt mx-1'></i>Update
+              task</button>
+            <div class="dropdown-divider"></div>
+            <button data-id="{{task._id}}" class="delete-task dropdown-item"><i
+                class='bx bx-trash mx-1 text-danger'></i>Delete task</button>
+          </div>
+        </div>
+      </div>
+      <p class="text-muted task-project-title" data-id="{{task._id}}"></p>
+      <h3>{{task.title}}</h3>
+      <p class="text-muted">{{task.description}}</p>
+      <div class="task-box-footer">
+        <hr>
+        <div class="d-flex flex-row justify-content-between align-items-center">
+          <div>
+            {{#each task.assignees as |u|}}
+            <button type="button" class="btn btn-secondary rounded-circle" data-toggle="tooltip" data-placement="top"
+              title="{{u.email}}">{{firstInital u}}</button>
+            {{/each}}
+          </div>
+          <span class="text-muted">{{toStringDate task.dueDate}}</span>
+        </div>
+
+      </div>
+
     </div>
+    {{/stringCompare}}
+    {{!-- {{task.title}} --}}
+    {{/each}}
+  </div>
 </div>
 {{!-- Update task modal --}}
- <div class="modal fade" id="update-task-modal" tabindex="-1" role="dialog" aria-labelledby="update-task-modal" aria-hidden="true">
+<div class="modal fade" id="update-task-modal" tabindex="-1" role="dialog" aria-labelledby="update-task-modal"
+  aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content ">
       <div class="modal-header">
@@ -143,15 +160,15 @@
         </button>
       </div>
       <div class="modal-body">
-          <form class="m-4">
+        <form class="m-4">
           <div class="form-group mb-4">
             <label for="update-task-project">Project</label>
-              <select id="update-task-project" class="form-control">
-                {{!-- {{#each user.projects as |project|}} --}}
-                  <option id="project-with-update-task" ></option>             
-                {{!-- {{/each}} --}}
+            <select id="update-task-project" class="form-control">
+              {{!-- {{#each user.projects as |project|}} --}}
+              <option id="project-with-update-task"></option>
+              {{!-- {{/each}} --}}
             </select>
-           </div>
+          </div>
           <div class="form-group mb-4">
             <label for="update-task-title">Title</label>
             <input type="text" class="form-control" id="update-task-title">
@@ -160,37 +177,34 @@
             <label for="update-task-description">Description</label>
             <input type="text" class="form-control" id="update-task-description">
           </div>
-          <div class="container w-100 p-0 mb-4"> 
-            <label>Due Date </label> 
-            <div  
-              class="input-group date w-100" 
-               > 
-              <input id="datepicker2" class="form-control" 
-                    type="text" readonly data-date-format="mm/dd/yyyy"/> 
-              <span class="input-group-addon"> 
-              </span> 
-            </div> 
-          </div> 
+          <div class="container w-100 p-0 mb-4">
+            <label>Due Date </label>
+            <div class="input-group date w-100">
+              <input id="datepicker2" class="form-control" type="text" readonly data-date-format="mm/dd/yyyy" />
+              <span class="input-group-addon">
+              </span>
+            </div>
+          </div>
           <div class="form-group mb-4">
             <label for="update-task-priority">Priority</label>
-              <select id="update-task-priority" class="form-control">
-                <option class="">Critical</option>
-                <option>High</option>
-                <option>Medium</option>
-                <option>Minor</option>
-              </select>
-           </div>
-           <div class="form-group mb-4">
-              <label for="update-task-status">Status</label>
-              <select id="update-task-status" class="form-control">
-                <option>Not started</option >
-                <option>In progress</option>
-                <option>Complete</option>
-              </select>
-           </div>
-           <div class="mb-4" id="update-task-assignees" data-value="{{json user.projects}}">
-              <p>Assignees</p>
-           </div>
+            <select id="update-task-priority" class="form-control">
+              <option class="">Critical</option>
+              <option>High</option>
+              <option>Medium</option>
+              <option>Minor</option>
+            </select>
+          </div>
+          <div class="form-group mb-4">
+            <label for="update-task-status">Status</label>
+            <select id="update-task-status" class="form-control">
+              <option>Not started</option>
+              <option>In progress</option>
+              <option>Complete</option>
+            </select>
+          </div>
+          <div class="mb-4" id="update-task-assignees" data-value="{{json user.projects}}">
+            <p>Assignees</p>
+          </div>
           <buttonn id="update-task-submit" type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>
@@ -199,6 +213,6 @@
       </div>
     </div>
   </div>
-</div> 
+</div>
 
 <script src="/tasks.js"></script>

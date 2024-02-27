@@ -19,10 +19,9 @@ router.get('/',async (req, res) => {
     }
 })
 
-//get one project (only if you have access)
+//get one project
 router.get('/:projectId', projectAuth ,async (req, res) => {
     try{
-        // res.send(req.project)
         res.render(
             "oneProject", 
             {project: req.project, user: req.user}
@@ -32,17 +31,17 @@ router.get('/:projectId', projectAuth ,async (req, res) => {
     }
 })
 
-//create project (can't add tasks from this point)
+//create project
 router.post('/', async (req, res) => {
     try{
         let user = await User.findOne({email: req.oidc.user.email});
 
-        //creating the project using allwo listing
+        //creating the project using allow listing
         const {title, description, onlyOwnerEdit, collaborators} = req.body;
 
         let project = await Project.create({title, description, onlyOwnerEdit, collaborators});
 
-        //adding this projeoct to all collabortors project list
+        //adding this project to all collabortors project list
         if(req.body.collaborators){         
             for(let i = 0; i < req.body.collaborators.length; i++) {
                 await User.findByIdAndUpdate(
@@ -72,7 +71,7 @@ router.post('/', async (req, res) => {
     }
 })
 
-//update a project (tasks are handle in the taskRoutes; can't delete or add tasks from the project edit endpoint)
+//update a project
 router.put('/:projectId', [projectAuth, projectAdmin] ,async(req, res) => {
     try{
 
@@ -84,7 +83,7 @@ router.put('/:projectId', [projectAuth, projectAdmin] ,async(req, res) => {
         // get not updated project
         let notupdated = await Project.findById(req.project._id)
 
-        //iteratre over current users and update the user to pull the project id from each
+        //iteratre over current users and pull the project id from each
         for(let i = 0; i < notupdated.collaborators.length; i++){
             await User.findByIdAndUpdate(
                 notupdated.collaborators[i]._id, 
@@ -92,7 +91,7 @@ router.put('/:projectId', [projectAuth, projectAdmin] ,async(req, res) => {
             )
         }
 
-        //iterate over req.body.collborators and add project to each person's project list (plus ower)
+        //iterate over selected users and add project to each person's project list (plus ower)
         for(let i = 0; i < allCollabs.length; i++){
             await User.findByIdAndUpdate(
                 allCollabs[i], 

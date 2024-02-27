@@ -9,9 +9,8 @@ const middleware = {
             path: "collaborators", 
             model: "User"
         }
-
     }).populate("tasks").lean();
-    //finds the projects from the params
+    //finds the project from the params
     let project = await Project.findById(req.params.projectId).populate({ 
         path: "tasks", 
             populate: {
@@ -21,7 +20,7 @@ const middleware = {
             }}).populate('collaborators', 'email').lean();
     req.user = currUser;
     if(project) {
-            //keep track of users who are collaborators on this project 
+            //keeps track of users who are collaborators on this project 
             let authUsers = [];
             project.collaborators.forEach(user => currUser._id.equals(user._id) ? authUsers.push(true) : authUsers.push(false));
 

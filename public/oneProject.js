@@ -1,3 +1,5 @@
+
+//adding background colors for status and priority based on value
 let priority = document.getElementsByClassName('priority')
 let statuss = document.getElementsByClassName('status')
 
@@ -25,9 +27,11 @@ for(let i = 0; i < statuss.length; i++){
     }
 }
 
+// getting task data for the project
 let taskData = document.getElementById('progress-section').getAttribute('data-value');
 let allProjectTasks = JSON.parse(taskData);
 
+// setting progress bar based on total tasks vs tasks complete
 let completedTaskprogressbar = document.getElementById("project-task-complete")
 let completedTaskprogressbarText = document.getElementById("project-task-c-text")
 
@@ -43,6 +47,8 @@ allProjectTasks.forEach( task => {
 completedTaskprogressbar.setAttribute('style', `width: ${(comp/total || 0)*100}%`)
 completedTaskprogressbarText.textContent = `${Math.round((comp/total || 0)*100)}% of tasks completed`
 
+
+//delete project function
 const handleProjectDelete = async(projectId) => {
         const res = await fetch(`/projects/${projectId}`, {
             method: 'DELETE',   
@@ -54,7 +60,7 @@ const handleProjectDelete = async(projectId) => {
         }
     }
     
-    
+//delete a project  
 let projectDeletebtn = document.getElementById('delete-project')
 let currId = document.getElementById("one-project-title").getAttribute('data-value')
 projectDeletebtn.addEventListener('click', () => {handleProjectDelete(currId)})
@@ -89,7 +95,6 @@ currProjectCollabs.forEach(col => {
 
 
 //autocomplete for collaborators
-
 const removeUpdateProjectCollaborator = (val) => {
     let removedCollab;
     users.forEach(u => {
@@ -145,8 +150,9 @@ const updateShowResults = (val) => {
     }
     res.appendChild(ul)
 }
+
+//adding collaborator html pill
  projectUpdateCollaborators.forEach(col => {
-        // updateAddCollaborators(col.email)
         let span = document.createElement('span');
         span.classList.add('d-inline-flex')
         span.classList.add("badge", "badge-pill", "bg-secondary", "m-2", "p-2", "collab")

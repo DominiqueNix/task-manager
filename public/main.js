@@ -1,4 +1,4 @@
-//grab all the task divs
+//getting project data
 let taskCheckboxMain =  document.getElementById('task-assignees');
 let projectDataMail = taskCheckboxMain.getAttribute('data-value');
 let projectsMain = JSON.parse(projectDataMail);
@@ -11,13 +11,13 @@ let selectedProject;
 
 projectSelectForm.addEventListener('change', () => {
     projectsMain.forEach(p => {
-    //updating the project the user has selected
-    if(p._id == projectSelectForm.value){
-        selectedProject = p
-    }
-    
-})
+    //updating the project the user has selected based on change in dropdown
+        if(p._id == projectSelectForm.value){
+            selectedProject = p
+        } 
+    })
 
+    //if there are assingees on the form remove them
     if(document.getElementsByClassName('assignee-form-list')){
         let all = document.getElementsByClassName('assignee-form-list')
         for(let i= 0; i < all.length; i++){
@@ -28,6 +28,7 @@ projectSelectForm.addEventListener('change', () => {
         }
     }
 
+    //re add correct assingees based on new project selected
     if(selectedProject){
         selectedProject.collaborators.forEach(col => {
             let formDiv = document.createElement('div');
@@ -49,7 +50,7 @@ projectSelectForm.addEventListener('change', () => {
     }
 })
 
-
+//adding new task
 let newTaskSubmit = document.getElementById("new-task-submit")
 
 newTaskSubmit.addEventListener('click', async(e) =>{

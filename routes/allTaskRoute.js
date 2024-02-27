@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const {User } = require('../models');
 
+//get all tasks for a user
+// NOTE: routes seperate due to mongoose issuess
 router.get('/', async(req, res) => {
     try{
         let user = await User.findOne({email: req.oidc.user.email}).populate({ 

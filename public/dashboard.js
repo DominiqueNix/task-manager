@@ -1,10 +1,14 @@
 
+//getting task data from handlebars page
 let taskCard = document.getElementById('task-card')
 let tasks;
 
 if(taskCard) {
+//setting task data
 let taskData = taskCard.getAttribute('data-value');
 tasks = JSON.parse(taskData);
+
+//calculating the total tasks based on status for task status section
 let totalTasks = tasks.length;
 let totalInProgressTasks = 0;
 let totalCompleteTasks = 0;
@@ -26,16 +30,18 @@ document.getElementById("in-progress").textContent = totalInProgressTasks
 document.getElementById("complete").textContent = totalCompleteTasks
 document.getElementById("sub-title").textContent = new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})
 }
-
-//grab all the task divs
+ //getting project data 
 let taskCheckbox =  document.getElementById('task-assignees');
 
 if(taskCheckbox){
+
 let projectData = taskCheckbox.getAttribute('data-value');
+
+//settign project data
 let projects = JSON.parse(projectData);
 
 projects.forEach(p => {
-    //grab the project from the table
+    //setting project progress bar 
     let tableProject = document.getElementById(`progress-project-${p._id}`)
     let compT = 0;
     let totalT = p.tasks.length
@@ -48,6 +54,7 @@ projects.forEach(p => {
 })
 }
 
+//caluculating the next 5 upcoming tasks based on task due date
 let upcomingTasks = [];
 
 if(taskCard){
@@ -56,6 +63,8 @@ if(taskCard){
 console.log(upcomingTasks)
 let tBody = document.getElementById("dash-task-table")
 
+
+//create upcoming task table
 upcomingTasks.forEach(t => {
     let tr = document.createElement('tr')
     tr.classList.add("m-2")
@@ -99,6 +108,7 @@ upcomingTasks.forEach(t => {
     tBody.appendChild(tr)
 })
 
+// generating backgound colors for status and priority on upcomig task tabel based on value
 let priority = document.getElementsByClassName('priority')
 let statuss = document.getElementsByClassName('status')
 

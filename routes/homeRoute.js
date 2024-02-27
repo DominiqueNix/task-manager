@@ -1,9 +1,8 @@
 
 const router = require('express').Router();
 const {User, Project, Task} = require('../models')
-// router.get('/users', async)
 
-// find all users (testing only)
+// find all users
 router.get('/users', async(req, res) => {
     try{
        res.send(await User.find().select("_id email"));
@@ -40,7 +39,6 @@ router.get('/', async (req, res) => {
         if(!user) {
             user = await User.create({email: email})
         } 
-        // res.send(user)
         res.render('dashboard', {
             user: user,
             username: req.oidc.user.username ?req.oidc.user.username : req.oidc.user.email

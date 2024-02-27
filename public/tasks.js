@@ -1,5 +1,6 @@
-let taskPriorities = document.getElementsByClassName('task-box-priorites')
 
+//updating background color of status and priority based on value
+let taskPriorities = document.getElementsByClassName('task-box-priorites')
 let taskStatuses = document.getElementsByClassName('task-box-status')
 
 for(let i = 0; i < taskPriorities.length; i++){
@@ -25,6 +26,8 @@ for(let i = 0; i < taskStatuses.length; i++){
         taskStatuses[i].classList.add('blue')
     }
 }
+
+//setting porgress bar
 let taskData = document.getElementById("progress-section").getAttribute('data-value')
 let tasks = JSON.parse(taskData)
 let completedTaskprogressbar = document.getElementById("task-complete")
@@ -39,10 +42,10 @@ tasks.forEach( task => {
     }
 })
 
-
 completedTaskprogressbar.setAttribute('style', `width: ${(comp/total || 0)*100}%`)
 completedTaskprogressbarText.textContent = `${Math.round((comp/total || 0)*100)}% of tasks completed`
 
+//getting project data
 let projectData = document.getElementById("tasks-container").getAttribute('data-value')
 let projects = JSON.parse(projectData);
 
@@ -61,6 +64,7 @@ for(let i = 0; i < taskProjectTitles.length; i++){
     })
 }
 
+//delete a task function
 const handleTaskDelete = async(taskId) => {
 let projectId;
 projects.forEach(p => {
@@ -79,6 +83,7 @@ projects.forEach(p => {
 }
 
 
+//delete task
 let taskDeletebtns = document.getElementsByClassName('delete-task')
 
 for(let i = 0; i < taskDeletebtns.length; i++){
@@ -89,7 +94,6 @@ for(let i = 0; i < taskDeletebtns.length; i++){
 
 //update a task
 const updateTaskProjectData = document.getElementById('update-task-assignees');
-
 const updateTaskProjects = JSON.parse(updateTaskProjectData.getAttribute('data-value'))
 
 
@@ -99,11 +103,10 @@ let updateTaskBtns = document.getElementsByClassName('update-task')
 
 for(let i = 0; i < updateTaskBtns.length; i++){
     let btn = updateTaskBtns[i]
-    
     btn.addEventListener('click', () => {
         selectedTask = JSON.parse(btn.getAttribute('data-value'))
         let projcetAssociatedWithTask;
-        //set defalut value fo form to selected task data
+        //set defalut value of form to selected task data
         let updateTaskTitle = document.getElementById
         ('update-task-title')
         let updateTaskDescription = document.getElementById('update-task-description')
@@ -191,6 +194,7 @@ for(let i = 0; i < updateTaskBtns.length; i++){
 }
 
 
+//update task
 let updateTaskSubmitBtn = document.getElementById('update-task-submit')
 
 updateTaskSubmitBtn.addEventListener('click', async () => {

@@ -17,7 +17,7 @@ router.get('/:projectId/tasks/:taskId', projectAuth ,async (req, res) => {
 router.post('/:projectId/tasks', projectAuth ,async (req, res) => {
     try{
 
-         //creating task
+        //creating task
         let task = await Task.create(req.body);
         //iterate through assignees and add this task each users task list
         if(req.body.assignees){         

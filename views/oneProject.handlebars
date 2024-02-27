@@ -2,66 +2,83 @@
   <h1 id="one-project-title" class="display-4" data-value="{{project._id}}">
     {{project.title}}
     {{#projectPermissions project.owner user._id project.onlyOwnerEdit}}
-     <div class="btn-group">
-          <button type="button" class="btn btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='bx bx-dots-vertical-rounded'></i></button>
-          <div class="dropdown-menu">
-            <button id="update-project" class="dropdown-item" type="button" data-toggle="modal" data-target="#updateProjectModal"><i class='bx bx-edit-alt mx-1'></i>Update Project</button>
-            <div class="dropdown-divider"></div>
-            <button id="delete-project" class="dropdown-item"><i class='bx bx-trash mx-1 text-danger' ></i>Delete Project</button>
-        </div>    
+    <div class="btn-group">
+      <button type="button" class="btn btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
+          class='bx bx-dots-vertical-rounded'></i></button>
+      <div class="dropdown-menu">
+        <button id="update-project" class="dropdown-item" type="button" data-toggle="modal"
+          data-target="#updateProjectModal"><i class='bx bx-edit-alt mx-1'></i>Update Project</button>
+        <div class="dropdown-divider"></div>
+        <button id="delete-project" class="dropdown-item"><i class='bx bx-trash mx-1 text-danger'></i>Delete Project</button>
+      </div>
     </div>
     {{/projectPermissions}}
-    </h1>
-  <h4 class="lead">{{project.description}}</h6>  
+  </h1>
+  <h4 class="lead">{{project.description}}</h6>
 </div>
-  <span class="mx-2 my-5 h5">Collaboators: </span>
- {{#each project.collaborators as |u|}}
-      <button type="button" class="btn btn-secondary rounded-circle" data-toggle="tooltip" data-placement="top" title="{{u.email}}">{{firstInital u}}</button>
-  {{/each}}
+<span class="mx-2 my-5 h5">Collaboators: </span>
+{{#each project.collaborators as |u|}}
+<button type="button" class="btn btn-secondary rounded-circle" data-toggle="tooltip" data-placement="top"
+  title="{{u.email}}">{{firstInital u}}</button>
+{{/each}}
 
 <div id="progress-section" class="my-5 w-75 mx-2" data-value="{{json project.tasks}}">
   <h3>Progress</h3>
   <p id="project-task-c-text"></p>
-    <div class="progress mb-2">
-      <div id="project-task-complete" class="progress-bar progress-bar-striped bg-success" role="progressbar"></div>
-    </div> 
+  <div class="progress mb-2">
+    <div id="project-task-complete" class="progress-bar progress-bar-striped bg-success" role="progressbar"></div>
+  </div>
 </div>
 <div class="m-2 d-flex display-content-center flex-column">
-<h3 class="text-start">All Tasks</h3>
-        <table class="table border bs-border-color-translucent">
-          <thead>
-            <tr class="table-active">
-              <th class="top-row title-row"scope="col">Name</th>
-              <th class="top-row description-row"scope="col">Description</th>
-              <th class="top-row"scope="col">Due Date</th>
-              <th class="top-row text-center"scope="col">Status</th>
-              <th class="top-row text-center"scope="col">Priority</th>
-              <th class="top-row"scope="col">Assignees</th>      
-            </tr>
-          </thead>
-          <tbody>
-              {{#each project.tasks as |task|}} 
-                <tr class="m-2">
-                  <td class="title-row"><div class="cell-content">{{task.title}}</div></td>
-                  <td class="description-row"><div class="cell-content description">{{task.description}}</div></td>
-                  <td><div class="cell-content">{{toStringDate task.dueDate}}</div></td>
-                  <td><div class="cell-content status justify-content-center">{{task.status}}</div></td>
-                  <td><div class="cell-content priority justify-content-center">{{task.priority}}</div></td>
-                  <td><div class="cell-content">
-                    {{#each task.assignees as |u|}}
-                      <div class="rounded-circle bg-secondary text-white m-1">
-                        <button type="button" class="btn btn-secondary rounded-circle" data-toggle="tooltip" data-placement="top" title="{{u.email}}">{{firstInital u}}</button>
-                      </div>
-                    {{/each}}
-                  </div></td>
-                </tr>
-              {{/each}}
-          </tbody>
-        </table>
+  <h3 class="text-start">All Tasks</h3>
+  <table class="table border bs-border-color-translucent">
+    <thead>
+      <tr class="table-active">
+        <th class="top-row title-row" scope="col">Name</th>
+        <th class="top-row description-row" scope="col">Description</th>
+        <th class="top-row" scope="col">Due Date</th>
+        <th class="top-row text-center" scope="col">Status</th>
+        <th class="top-row text-center" scope="col">Priority</th>
+        <th class="top-row" scope="col">Assignees</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each project.tasks as |task|}}
+      <tr class="m-2">
+        <td class="title-row">
+          <div class="cell-content">{{task.title}}</div>
+        </td>
+        <td class="description-row">
+          <div class="cell-content description">{{task.description}}</div>
+        </td>
+        <td>
+          <div class="cell-content">{{toStringDate task.dueDate}}</div>
+        </td>
+        <td>
+          <div class="cell-content status justify-content-center">{{task.status}}</div>
+        </td>
+        <td>
+          <div class="cell-content priority justify-content-center">{{task.priority}}</div>
+        </td>
+        <td>
+          <div class="cell-content">
+            {{#each task.assignees as |u|}}
+            <div class="rounded-circle bg-secondary text-white m-1">
+              <button type="button" class="btn btn-secondary rounded-circle" data-toggle="tooltip" data-placement="top"
+                title="{{u.email}}">{{firstInital u}}</button>
+            </div>
+            {{/each}}
+          </div>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
 </div>
 
 <!-- Update Project Modal-->
-<div class="modal fade" id="updateProjectModal" tabindex="-1" role="dialog" aria-labelledby="updateProjectModalTitle" aria-hidden="true">
+<div class="modal fade" id="updateProjectModal" tabindex="-1" role="dialog" aria-labelledby="updateProjectModalTitle"
+  aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -71,9 +88,10 @@
         </button>
       </div>
       <div class="modal-body">
-        {{!-- form title text description textonylowneredit select status input collaboators div (handle rest in js) --}}
+        {{!-- form title text description textonylowneredit select status input collaboators div (handle rest in js)
+        --}}
         <form autocomplete="off">
-           <div class="form-group mb-4">
+          <div class="form-group mb-4">
             <label for="update-project-title">Title</label>
             <input type="text" class="form-control" id="update-project-title" value="{{project.title}}">
           </div>
@@ -82,18 +100,22 @@
             <input type="text" class="form-control" id="update-project-description" value="{{project.description}}">
           </div>
           <div class="form-check form-switch mb-4">
-            <input class="form-check-input only-owner-edit" type="checkbox" id="update-only-owner-edit" data-value="{{project.onlyOwnerEdit}}">
-            <label class="form-check-label" for="update-only-owner-edit">All collaboators can edit or delete this project</label>
+            <input class="form-check-input only-owner-edit" type="checkbox" id="update-only-owner-edit"
+              data-value="{{project.onlyOwnerEdit}}">
+            <label class="form-check-label" for="update-only-owner-edit">All collaboators can edit or delete this
+              project</label>
           </div>
-          <div id="update-chosen-collaborators" data-value="{{json project.collaborators}}" data-user="{{json user.email}}"></div>
-            <div class="mb-4 d-block">
-              <p class="mb-0">Collaboators</p>
-              <input type="text" name="update-project-collaborators" id="update-project-collaborators" onKeyUp="updateShowResults(this.value)" /> 
-              <div id="update-result"></div>
-            </div>
-            <buttonn id="update-project-submit" type="submit" class="btn btn-primary">Submit</button>
-          </form>
-        </div>
+          <div id="update-chosen-collaborators" data-value="{{json project.collaborators}}"
+            data-user="{{json user.email}}"></div>
+          <div class="mb-4 d-block">
+            <p class="mb-0">Collaboators</p>
+            <input type="text" name="update-project-collaborators" id="update-project-collaborators"
+              onKeyUp="updateShowResults(this.value)" />
+            <div id="update-result"></div>
+          </div>
+          <buttonn id="update-project-submit" type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
@@ -102,4 +124,3 @@
 </div>
 
 <script src="/oneProject.js"></script>
-

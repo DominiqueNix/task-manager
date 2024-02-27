@@ -36,14 +36,12 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}));
 app.use(express.static(path.join(__dirname, 'public')))
 
-
+//landing page initialized before auth config
 app.get('/', (req, res) => {
     res.render('home')
 })
 
 app.use(auth(config));
-
-
 
 app.use('/projects', projectRoutes);
 app.use('/dashboard', homeRoutes);
