@@ -12,8 +12,8 @@ router.get('/',async (req, res) => {
                 model: "User"
             }
 
-        }).populate("tasks").lean();
-        res.render("projects", {user: user})
+        }).populate("tasks");
+        res.send(user)
     }catch(err){
         console.log(err)
     }
