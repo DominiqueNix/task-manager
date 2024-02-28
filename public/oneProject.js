@@ -209,3 +209,47 @@ document.getElementById('update-project-submit').addEventListener('click', async
         }
     }
 })
+
+//submit new assignees 
+let Assigneescheckedboxes = [];
+let addAssigneeBtn = document.getElementsByClassName('add-assignees')
+let addAssigneeTaskId;
+
+for (let i = 0; i < addAssigneeBtn.length; i++) {
+    let eachAddBtn = addAssigneeBtn[i];
+    eachAddBtn.addEventListener('click', () => {
+        addAssigneeTaskId = eachAddBtn.getAttribute('data-id')
+    })
+
+    
+}
+
+eachCheck = document.getElementsByClassName('add-assignees-check')
+    for(let i = 0; i < eachCheck.length; i++){
+        eachCheck[i].addEventListener('change', () => {
+            if(eachCheck[i].checked && !Assigneescheckedboxes.includes(eachCheck[i].value)){
+                Assigneescheckedboxes.push(eachCheck[i].value)
+            } else if(!eachCheck[i].checked) {
+                index = Assigneescheckedboxes.indexOf(eachCheck[i].value)
+                Assigneescheckedboxes.splice(index, 1)
+            }
+        })
+        
+    }
+document.getElementById('add-assignees-btn').addEventListener('click', async(e) => {
+    e.preventDefault()
+    if(Assigneescheckedboxes && addAssigneeTaskId) {
+        console.log(Assigneescheckedboxes)
+        console.log(addAssigneeTaskId)
+        const res = await fetch(`/projects/${currId}/tasks/${addAssigneeTaskId}`, {
+            method:'PUT', 
+            body: JSON.stringify({assignees: Assigneescheckedboxes}), 
+            headers: {'Content-Type': 'application/json'}
+        })
+        if(res.ok) {
+            location.reload()
+        } else {
+            alert(res.statusText)
+        }
+    }
+})

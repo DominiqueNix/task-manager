@@ -33,6 +33,8 @@ let tasks = JSON.parse(taskData)
 let completedTaskprogressbar = document.getElementById("task-complete")
 let completedTaskprogressbarText = document.getElementById("task-c-text")
 
+console.log(tasks)
+
 let comp = 0;
 let total = tasks.length;
 

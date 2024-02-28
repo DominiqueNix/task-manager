@@ -251,3 +251,31 @@
 #upcoming-tasks{
     margin: 2%;
 }
+
+#home-page-logo{
+    width: 30vw !important;
+}
+
+#right-side{
+    background-color: black;
+    height: 100vh;
+}
+
+.home-text{
+    color: #9A0000 !important;
+}
+
+.login-btn{
+    background-color: #9A0000 !important;
+    height: 5vh;
+    width: 10vw;
+    font-size: 1.5rem !important;
+}
+
+.login-btn:hover{
+    background-color: #640808 !important;
+}
+
+/* .add-assignees-row{
+    
+} */

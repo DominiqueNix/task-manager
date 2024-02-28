@@ -19,7 +19,6 @@ router.get('/', async(req, res) => {
                 }
             }).lean()
         res.render("tasks", {user: user})
-        // console.log('hi')
     }catch(err){
         console.error(err)
     }

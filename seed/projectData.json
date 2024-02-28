@@ -2,61 +2,51 @@
     {
       "title": "Project Moonbeam",
       "description": "Develop a self-charging solar backpack for outdoor enthusiasts, harnessing the power of the sun for on-the-go electronics.",
-      "endDate": "2024-05-22", 
       "onlyOwnerEdit": false
     },
     {
       "title": "Initiative Green Thumb",
       "description": "Transform urban rooftops into thriving community gardens, promoting sustainability and local food production.",
-      "endDate": "2024-11-19", 
       "onlyOwnerEdit": false
     },
     {
       "title": "Operation Mind Meld",
       "description": "Develop a non-invasive communication technology that allows direct thought-to-thought exchange, revolutionizing collaboration and understanding.",
-      "endDate": "2025-02-07", 
       "onlyOwnerEdit": false
     },
     {
       "title": "Quest for the Missing Sock",
       "description": "Utilize cutting-edge AI and robotics to locate and retrieve lost socks within homes, eliminating laundry frustration forever.",
-      "endDate": "2025-07-15", 
       "onlyOwnerEdit": false
     },
     {
       "title": "Project Harmony",
       "description": "Compose an AI-powered symphony that blends musical styles from across time and cultures, fostering global unity and appreciation.",
-      "endDate": "2025-12-31", 
       "onlyOwnerEdit": false
     },
     {
       "title": "Operation Deep Dive",
       "description": "Construct a submersible capable of reaching the Earth's deepest trenches, uncovering the mysteries and wonders of the ocean's hidden depths.",
-      "endDate": "2026-04-20", 
       "onlyOwnerEdit": false
     },
     {
       "title": "Initiative Dream Weaver",
       "description": "Develop technology to record and share dreams, allowing individuals to experience each other's subconscious worlds and foster deeper connections.",
-      "endDate": "2026-09-12", 
       "onlyOwnerEdit": false
     },
     {
       "title": "Quest for the Perfect Pizza",
       "description": "Embark on a global culinary adventure to identify and combine the finest ingredients and techniques, creating the ultimate pizza experience.",
-      "endDate": "2027-02-14", 
       "onlyOwnerEdit": false
     },
     {
       "title": "Project Second Chance",
       "description": "Develop advanced bioprinting technology to create functional replacement organs, offering hope and extended life to individuals with organ failure.",
-      "endDate": "2027-07-04", 
       "onlyOwnerEdit": false
     },
     {
       "title": "Operation Mars Melody",
       "description": "Compose and transmit a musical message to potential life on Mars, using radio waves as a universal language bridge.",
-      "endDate": "2028-01-01", 
       "onlyOwnerEdit": false
     }
   ]

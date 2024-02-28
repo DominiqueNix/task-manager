@@ -63,7 +63,7 @@ router.put('/:projectId/tasks/:taskId', projectAuth, async (req, res) => {
             // add task to users who are selected
             for(let i = 0; i < req.body.assignees.length; i++){
                 await User.findByIdAndUpdate(
-                    task.assignees[i], 
+                    req.body.assignees[i], 
                     {$addToSet: {tasks: task._id}}
                 )
             }   
