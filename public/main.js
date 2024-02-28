@@ -1,7 +1,12 @@
 //getting project data
 let taskCheckboxMain =  document.getElementById('task-assignees');
-let projectDataMail = taskCheckboxMain.getAttribute('data-value');
-let projectsMain = JSON.parse(projectDataMail);
+let projectDataMail;
+let projectsMain;
+
+if(taskCheckboxMain){
+    projectDataMail = taskCheckboxMain.getAttribute('data-value');
+    projectsMain = JSON.parse(projectDataMail);
+}
 
 
 if(projectsMain.length){ 
