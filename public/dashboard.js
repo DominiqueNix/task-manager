@@ -38,7 +38,7 @@ if (taskCard) {
 //getting project data
 let taskCheckbox = document.getElementById("task-assignees");
 
-if (taskCheckbox.length) {
+if (taskCheckbox) {
   let projectData = taskCheckbox.getAttribute("data-value");
 
   //settign project data
@@ -47,6 +47,7 @@ if (taskCheckbox.length) {
   projects.forEach((p) => {
     //setting project progress bar
     let tableProject = document.getElementById(`progress-project-${p._id}`);
+    console.log(tableProject)
     let compT = 0;
     let totalT = p.tasks.length;
     p.tasks.forEach((t) => {
