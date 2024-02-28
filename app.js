@@ -15,14 +15,15 @@ const PORT = process.env.PORT || 4000;
 const {
     AUTH0_SECRET, 
     AUTH0_CLIENT_ID, 
-    AUTH0_BASE_URL
+    AUTH0_BASE_URL, 
+    BASE_URL
     } = process.env;
 
 const config = {
     authRequired: true, 
     auth0Logout: true,
     secret: AUTH0_SECRET, 
-    baseURL: `http://localhost:${PORT}`, 
+    baseURL: BASE_URL, 
     clientID: AUTH0_CLIENT_ID, 
     issuerBaseURL: AUTH0_BASE_URL
 };
