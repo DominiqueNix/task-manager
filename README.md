@@ -39,7 +39,18 @@ From the root project directory run:
 
 If you navigate to the `/seed` directory, there is data that you can use to add projects and tasks
 ### Website Screenshots
-TBD
+##### Landing Page
+![Screenshot 2024-02-28 4 10 52 PM](https://github.com/DominiqueNix/task-manager/assets/145811793/1f80d3b6-71a8-4be6-b891-230e55ec8396)
+
+##### Dashboard
+![Screenshot 2024-02-28 4 03 04 PM](https://github.com/DominiqueNix/task-manager/assets/145811793/c8c6a747-51d6-40e6-be7c-780027c72406)
+
+##### Project View
+![Screenshot 2024-02-28 4 03 19 PM](https://github.com/DominiqueNix/task-manager/assets/145811793/16fee53d-832d-4cba-a39c-98f9e9220c01)
+
+##### Task View
+![Screenshot 2024-02-28 4 03 30 PM](https://github.com/DominiqueNix/task-manager/assets/145811793/e5e06e9b-9e91-4af1-8906-aeb739933d5e)
+
 ### Development
 ##### Wireframes
 ![Screenshot 2024-02-27 1 36 17 PM](https://github.com/DominiqueNix/task-manager/assets/145811793/0c175f31-4768-4063-a4e7-1fd3432ade75)
