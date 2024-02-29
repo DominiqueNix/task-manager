@@ -8,6 +8,7 @@ This is a full stack task management website built with security features using 
 - [Deployed Website](#deployed-website)
 - [User Story](#user-story)
 - [Installation](#installation)
+- [Testing](#testing)
 - [Website Screenshots](#website-screenshots)
 - [Development](#development)
 - [Technology User](#technology-used)
@@ -21,7 +22,7 @@ https://harmonius.onrender.com/
 
 ### User Story
 ##### As a user, I want to:
-      1.Create an account using a third party provider
+      1. Create an account using a third party provider
       2. View my current tasks and projects
       3. Add, update, and delete projects
       4. Add, update, and delete tasks
@@ -42,8 +43,13 @@ Once the environment variables are defined, from the root project directory run:
      // run the program
      npm run dev
 ```
-
 If you navigate to the `/seed` directory, there is data that you can use to add projects and tasks
+### Testing 
+Run the following from the root diectory to run the tests:
+ ``` javascript
+ npm run test
+```
+Note: There will be a handlebars error that can be ignored. Wait a few seconds and the tests should pass despite these errors.
 ### Website Screenshots
 ##### Landing Page
 ![Screenshot 2024-02-28 4 10 52 PM](https://github.com/DominiqueNix/task-manager/assets/145811793/1f80d3b6-71a8-4be6-b891-230e55ec8396)
