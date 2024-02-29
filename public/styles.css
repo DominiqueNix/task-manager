@@ -23,7 +23,7 @@
 }
 
 .nav-title {
-    font-size: 2rem !important;
+    font-size: 1.75rem !important;
 }
 
 .datepicker {
@@ -276,6 +276,21 @@
     background-color: #640808 !important;
 }
 
-/* .add-assignees-row{
-    
-} */
+.nav-logo{
+    width: 20%;
+    margin-right: 5%;
+}
+
+.bx-up-arrow-alt{
+    transform: rotate(30deg) translate(10%, 20%);
+    font-size: 1.5rem;
+}
+
+.view-more-tasks{
+    text-decoration: none;
+    color: var(--text-green) !important;
+}
+
+.view-more-tasks:hover{
+    color: darkgreen !important;
+}

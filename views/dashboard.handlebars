@@ -1,8 +1,8 @@
 <div class="d-flex flex-column justify-content-start mt-4 ">
-  <h2>Welcome, {{user.email}}</h2>
-  <h4 class="display-8 text-secondary align-self-start" id="sub-title"></h4>
+  <h2 class="animate__animated animate__fadeIn">Welcome, {{user.email}}</h2>
+  <h4 class="display-8 text-secondary align-self-start animate__animated animate__fadeIn" id="sub-title"></h4>
   <section id="top-section" class="d-flex flex-row align-items-around justify-content-between">
-    <section id="task-stats" class="w-25">
+    <section id="task-stats" class="w-25 animate__animated animate__fadeIn">
       {{#if user.tasks}}
       <h3 class="text-start">Task Stats</h3>
       <div class="card" id="task-card" data-value="{{json user.tasks}}">
@@ -33,7 +33,7 @@
       <h3>No tasks</h3>
       {{/if}}
     </section>
-    <section id="project-stats" class="w-75">
+    <section id="project-stats" class="w-75 animate__animated animate__fadeIn">
       {{#if user.projects}}
       <h3 class="text-start">Project Stats</h3>
       <div class="table-container border bs-border-color-translucent">
@@ -79,9 +79,12 @@
       {{/if}}
     </section>
   </section>
-  <section id="upcoming-tasks">
+  <section id="upcoming-tasks" class="animate__animated animate__fadeIn">
     <div class="m-2 d-flex display-content-center flex-column">
-      <h3 class="text-start">Upcoming Tasks</h3>
+      <div class="d-flex w-100 justify-content-between align-items-center">
+        <h3 class="text-start">Upcoming Tasks</h3>
+        <a class="view-more-tasks" href="/tasks">View All<i class='bx bx-up-arrow-alt ml-4'></i></a>
+      </div>
       <table class="table border bs-border-color-translucent">
         <thead>
           <tr class="table-active">

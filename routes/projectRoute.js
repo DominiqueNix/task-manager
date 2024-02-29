@@ -151,7 +151,7 @@ router.put('/:projectId', [projectAuth, projectAdmin] ,async(req, res) => {
  
                             await User.findByIdAndUpdate(
                                  newAssignees[i], 
-                                 {$pull: {tasks: eachtask._id}}
+                                 {$addToSet: {tasks: eachtask._id}}
                             )
                          }
 
