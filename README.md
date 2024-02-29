@@ -28,7 +28,13 @@ https://harmonius.onrender.com/
       5. View stats about my projects
       6. View stats about my tasks
 ### Installation
-From the root project directory run: 
+Navigate to the `.env.example` file. Remove the `.example` extention from the file name. In this file you will find environment vaiables that need to be defined for this application to work. 
+
+Navigate to [MongoDB](https://www.mongodb.com/) and follow the instructions for setting up a database for the MONGODB_URL 
+
+For the rest of the environment variable Navigate to [Auth0](https://auth0.com/) and follow the instructions for setting up a nodejs web application. 
+
+Once the environment variables are defined, from the root project directory run: 
  ``` javascript
      // install necesarry dependencies
      npm install
