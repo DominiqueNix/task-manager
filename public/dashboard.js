@@ -6,7 +6,6 @@ if (taskCard) {
   //setting task data
   let taskData = taskCard.getAttribute("data-value");
   tasks = JSON.parse(taskData);
-
   //calculating the total tasks based on status for task status section
   let totalTasks = tasks.length;
   let totalInProgressTasks = 0;
@@ -47,7 +46,7 @@ if (taskCheckbox) {
   projects.forEach((p) => {
     //setting project progress bar
     let tableProject = document.getElementById(`progress-project-${p._id}`);
-    console.log(tableProject)
+    console.log(tableProject);
     let compT = 0;
     let totalT = p.tasks.length;
     p.tasks.forEach((t) => {

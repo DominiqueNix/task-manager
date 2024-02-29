@@ -81,7 +81,8 @@
                 aria-expanded="false"><i class='bx bx-dots-vertical-rounded'></i></button>
               <div class="dropdown-menu">
                 <button class="dropdown-item add-assignees" type="button" data-toggle="modal"
-                  data-target="#addAssigneesModal" data-id="{{task._id}}"><i class='bx bx-plus mx-1'></i></i>Add Assignees</button>
+                  data-target="#addAssigneesModal" data-id="{{task._id}}"><i class='bx bx-plus mx-1'></i></i>Add
+                  Assignees</button>
               </div>
             </div>
           </div>
@@ -152,7 +153,8 @@
       <div class="modal-body">
         {{#each project.collaborators as |user|}}
         <div class="form-check">
-          <input class="form-check-input add-assignees-check" type="checkbox" value="{{user._id}}" id="user{{user._id}}">
+          <input class="form-check-input add-assignees-check" type="checkbox" value="{{user._id}}"
+            id="user{{user._id}}">
           <label class="form-check-label" for="user{{user._id}}">
             {{user.email}}
           </label>

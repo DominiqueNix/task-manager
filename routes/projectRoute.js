@@ -114,7 +114,8 @@ router.put('/:projectId', [projectAuth, projectAdmin] ,async(req, res) => {
             //updates tasks if a user was deleted from project
             let updatedProject = await Project.findById(req.project._id);
             let authUsers = []
-            updatedProject.collaborators.forEach(u => authUsers.push(u._id));
+            
+            updatedProject.collaborators.forEach(u => authUsers.push(u));
 
             for(let i = 0; i < updatedProject.tasks.length; i++) {
                     let task = updatedProject.tasks[i]
@@ -180,7 +181,6 @@ router.delete('/:projectId', [projectAuth, projectAdmin] ,async (req, res) => {
                         {$pull: {tasks:req.project.tasks[i]._id}}
                     )
                 }
-
                 await Task.findByIdAndDelete(req.project.tasks[i]._id)
             } 
         }
