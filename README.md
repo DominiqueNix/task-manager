@@ -11,7 +11,7 @@ This is a full stack task management website built with security features using 
 - [Testing](#testing)
 - [Website Screenshots](#website-screenshots)
 - [Development](#development)
-- [Technology User](#technology-used)
+- [Technology Used](#technology-used)
 - [Acknowledgements](#acknowledgements)
 
 ### Api Documentation
