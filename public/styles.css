@@ -126,6 +126,7 @@
     width: 95%;
     margin-top: 3%;
     margin-left: 2%;
+    height: 50vh;
 }
 
 
@@ -157,9 +158,10 @@
 
 #task-card{
     margin-right: 3%;
-    height: 70% !important;
+    height: 90% !important;
     overflow: scroll;
-    height: max-content !important;
+    /* height: max-content !important; */
+    /* height: 100%; */
 }
 
 .task-stats {
@@ -169,9 +171,6 @@
     
 }
 
-#project-stats{
-    height: max-content !important;
-}
 
 .dash-bx{
     padding: 8px;
@@ -199,7 +198,7 @@
 }
 
 .table-container{
-    height: 70% !important;
+    height: 90% !important;
     overflow: scroll;
 }
 
