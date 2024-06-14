@@ -8,6 +8,7 @@ This is a full stack task management website built with security features using 
 - [Deployed Website](#deployed-website)
 - [User Story](#user-story)
 - [Installation](#installation)
+- [Docker](#docker)
 - [Testing](#testing)
 - [Website Screenshots](#website-screenshots)
 - [Development](#development)
@@ -44,6 +45,18 @@ Once the environment variables are defined, from the root project directory run:
      npm run dev
 ```
 If you navigate to the `/seed` directory, there is data that you can use to add projects and tasks
+### Docker
+This app has an associated Dockerfile attached. The image itself is not on Dockerhub, but you an still build an image and run it locally, to do so follow these steps:
+
+      1. Install Docker
+      2. In the root project directory run the follwing commands in the terminal: 
+ ``` javascript
+      // Build the image
+      docker build . -t harmonious
+      
+      // Run the program
+      docker run -p 4000:4000 harmonious
+``` 
 ### Testing 
 Run the following from the root diectory to run the tests:
  ``` javascript
